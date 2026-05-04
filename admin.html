@@ -7,1560 +7,273 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        :root {
-            --gold: #D4AF37;
-            --gold-light: #F5E6A3;
-            --gold-dark: #B8960C;
-            --black: #0A0A0A;
-            --dark: #1A1A2E;
-            --dark2: #16213E;
-            --white: #FFFFFF;
-            --gray: #E0E0E0;
-            --gradient-gold: linear-gradient(135deg, #D4AF37, #F5E6A3, #D4AF37);
-            --gradient-premium: linear-gradient(135deg, #D4AF37 0%, #B8960C 50%, #D4AF37 100%);
-            --danger: #FF5252;
-            --success: #00C853;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--black);
-            color: var(--white);
-            min-height: 100vh;
-        }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--dark); }
-        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
-
-        /* ===== LOGIN ===== */
-        .login-screen {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #0A0A0A, #1A1A2E, #0A0A0A);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-screen.hidden { display: none; }
-
-        .login-box {
-            background: rgba(26, 26, 46, 0.9);
-            border: 2px solid var(--gold);
-            border-radius: 25px;
-            padding: 50px 40px;
-            width: 90%;
-            max-width: 420px;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.15);
-        }
-
-        .login-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 5px;
-        }
-
-        .login-sub {
-            color: var(--gray);
-            font-size: 0.85rem;
-            margin-bottom: 30px;
-        }
-
-        .login-box .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .login-box label {
-            color: var(--gold);
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .login-box input {
-            width: 100%;
-            padding: 14px 18px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 12px;
-            color: var(--white);
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .login-box input:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 14px;
-            background: var(--gradient-premium);
-            color: var(--black);
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-            margin-top: 10px;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
-        }
-
-        .login-error {
-            color: var(--danger);
-            font-size: 0.85rem;
-            margin-top: 10px;
-            display: none;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            color: var(--gray);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.3s ease;
-        }
-
-        .back-link:hover { color: var(--gold); }
-
-        /* ===== ADMIN PANEL ===== */
-        .admin-panel { display: none; }
-        .admin-panel.active { display: block; }
-
-        /* Admin Header */
-        .admin-header {
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 2px solid var(--gold);
-            padding: 15px 25px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .admin-header .brand {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            background: var(--gradient-gold);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .admin-header .logout-btn {
-            padding: 8px 20px;
-            background: transparent;
-            border: 1px solid var(--danger);
-            color: var(--danger);
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .admin-header .logout-btn:hover {
-            background: var(--danger);
-            color: var(--white);
-        }
-
-        /* Admin Tabs */
-        .admin-tabs {
-            display: flex;
-            gap: 5px;
-            padding: 15px 25px;
-            background: var(--dark);
-            overflow-x: auto;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            padding: 10px 20px;
-            background: transparent;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            color: var(--gray);
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 0.85rem;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-        }
-
-        .tab-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-        .tab-btn.active {
-            background: var(--gradient-premium);
-            color: var(--black);
-            border-color: var(--gold);
-            font-weight: 700;
-        }
-
-        /* Tab Content */
-        .tab-content {
-            display: none;
-            padding: 25px;
-            max-width: 1000px;
-            margin: 0 auto;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .tab-content.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .tab-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--gold);
-            margin-bottom: 25px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        /* Form Styles */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            color: var(--gold);
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px 16px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 10px;
-            color: var(--white);
-            font-size: 0.95rem;
-            font-family: 'Poppins', sans-serif;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
-        }
-
-        .form-group textarea { resize: vertical; min-height: 100px; }
-
-        .form-group select option { background: var(--dark); }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-gold {
-            background: var(--gradient-premium);
-            color: var(--black);
-        }
-
-        .btn-gold:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
-        }
-
-        .btn-danger {
-            background: var(--danger);
-            color: var(--white);
-        }
-
-        .btn-danger:hover { background: #ff3333; }
-
-        .btn-edit {
-            background: #2196F3;
-            color: var(--white);
-        }
-
-        .btn-edit:hover { background: #1976D2; }
-
-        .btn-sm {
-            padding: 8px 15px;
-            font-size: 0.8rem;
-            border-radius: 8px;
-        }
-
-        /* Cards */
-        .data-card {
-            background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(22, 33, 62, 0.8));
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .data-card:hover {
-            border-color: var(--gold);
-        }
-
-        .data-card img {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            object-fit: cover;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        .data-card .info { flex: 1; }
-        .data-card .info h4 { color: var(--gold); margin-bottom: 5px; }
-        .data-card .info p { color: var(--gray); font-size: 0.85rem; }
-
-        .data-card .actions {
-            display: flex;
-            gap: 8px;
-            flex-shrink: 0;
-        }
-
-        /* Upload Area */
-        .upload-area {
-            border: 2px dashed rgba(212, 175, 55, 0.3);
-            border-radius: 15px;
-            padding: 40px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 15px;
-        }
-
-        .upload-area:hover {
-            border-color: var(--gold);
-            background: rgba(212, 175, 55, 0.05);
-        }
-
-        .upload-area i {
-            font-size: 2.5rem;
-            color: var(--gold);
-            margin-bottom: 10px;
-        }
-
-        .upload-area p {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        .upload-preview {
-            max-width: 100%;
-            max-height: 200px;
-            border-radius: 10px;
-            margin-top: 10px;
-            display: none;
-        }
-
-        /* Settings Cards */
-        .settings-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .settings-card {
-            background: rgba(26, 26, 46, 0.6);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 15px;
-            padding: 25px;
-        }
-
-        .settings-card h4 {
-            color: var(--gold);
-            margin-bottom: 15px;
-            font-family: 'Playfair Display', serif;
-        }
-
-        /* Table */
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        .admin-table th {
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--gold);
-            padding: 12px 15px;
-            text-align: left;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .admin-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-            font-size: 0.85rem;
-            color: var(--gray);
-        }
-
-        .admin-table tr:hover td {
-            background: rgba(212, 175, 55, 0.05);
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-            border-radius: 12px;
-            border: 1px solid rgba(212, 175, 55, 0.15);
-        }
-
-        /* Toast */
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(26, 26, 46, 0.95);
-            border: 1px solid var(--gold);
-            color: var(--white);
-            padding: 15px 25px;
-            border-radius: 10px;
-            z-index: 9999;
-            transform: translateX(400px);
-            transition: all 0.4s ease;
-            font-size: 0.9rem;
-        }
-
-        .toast.show { transform: translateX(0); }
-        .toast.success { border-color: var(--success); }
-        .toast.error { border-color: var(--danger); }
-
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 9998;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-overlay.active { display: flex; }
-
-        .modal {
-            background: var(--dark);
-            border: 2px solid var(--gold);
-            border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal h3 {
-            color: var(--gold);
-            font-family: 'Playfair Display', serif;
-            margin-bottom: 20px;
-        }
-
-        .modal .close-modal {
-            float: right;
-            background: none;
-            border: none;
-            color: var(--gray);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Loading */
-        .loading-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 99999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .loading-overlay.active { display: flex; }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(212, 175, 55, 0.2);
-            border-top-color: var(--gold);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        .loading-text { color: var(--gold); font-size: 0.9rem; }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .data-card { flex-direction: column; text-align: center; }
-            .data-card .actions { justify-content: center; }
-            .admin-tabs { padding: 10px 15px; }
-            .tab-content { padding: 15px; }
-            .form-row { grid-template-columns: 1fr; }
-        }
-
-        .embed-help {
-            background: rgba(212, 175, 55, 0.1);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 10px;
-            font-size: 0.8rem;
-            color: var(--gray);
-            line-height: 1.8;
-        }
-
-        .embed-help code {
-            background: rgba(0,0,0,0.3);
-            padding: 2px 6px;
-            border-radius: 4px;
-            color: var(--gold);
-            font-size: 0.75rem;
-        }
+        :root{--gold:#D4AF37;--gold-light:#F5E6A3;--black:#0A0A0A;--dark:#1A1A2E;--dark2:#16213E;--white:#FFFFFF;--gray:#E0E0E0;--gradient-gold:linear-gradient(135deg,#D4AF37,#F5E6A3,#D4AF37);--gradient-premium:linear-gradient(135deg,#D4AF37 0%,#B8960C 50%,#D4AF37 100%);--danger:#FF5252;--success:#00C853;}
+        *{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Poppins',sans-serif;background:var(--black);color:var(--white);min-height:100vh;}
+        ::-webkit-scrollbar{width:8px;}::-webkit-scrollbar-track{background:var(--dark);}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px;}
+        .login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#0A0A0A,#1A1A2E);z-index:9999;display:flex;align-items:center;justify-content:center;}.login-screen.hidden{display:none;}
+        .login-box{background:rgba(26,26,46,0.95);border:2px solid var(--gold);border-radius:20px;padding:40px;width:90%;max-width:400px;text-align:center;}.login-logo{font-family:'Playfair Display',serif;font-size:2rem;background:var(--gradient-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;}.login-sub{color:var(--gray);font-size:0.85rem;margin-bottom:25px;}
+        .form-group{margin-bottom:15px;text-align:left;}.form-group label{color:var(--gold);font-size:0.85rem;font-weight:600;margin-bottom:6px;display:block;}
+        .form-group input,.form-group textarea,.form-group select{width:100%;padding:12px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,175,55,0.3);border-radius:10px;color:var(--white);font-family:'Poppins',sans-serif;outline:none;transition:0.3s;}.form-group input:focus,.form-group textarea:focus{border-color:var(--gold);}
+        .btn{padding:12px 20px;border:none;border-radius:10px;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;transition:0.3s;display:inline-flex;align-items:center;gap:8px;}.btn-gold{background:var(--gradient-premium);color:var(--black);}.btn-gold:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(212,175,55,0.3);}.btn-danger{background:var(--danger);color:#fff;}.btn-edit{background:#2196F3;color:#fff;}.btn-sm{padding:6px 12px;font-size:0.8rem;border-radius:6px;}
+        .login-btn{width:100%;padding:13px;background:var(--gradient-premium);color:var(--black);border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;margin-top:5px;}.login-btn:hover{transform:translateY(-2px);}
+        .login-error{color:var(--danger);font-size:0.8rem;margin-top:8px;display:none;}.back-link{display:block;margin-top:15px;color:var(--gray);text-decoration:none;font-size:0.85rem;}.back-link:hover{color:var(--gold);}
+        .admin-panel{display:none;}.admin-panel.active{display:block;}
+        .admin-header{background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);border-bottom:2px solid var(--gold);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}.brand{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);}.logout-btn{padding:8px 15px;background:transparent;border:1px solid var(--danger);color:var(--danger);border-radius:8px;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;}.logout-btn:hover{background:var(--danger);color:#fff;}
+        .tabs{display:flex;gap:8px;padding:15px;background:var(--dark);overflow-x:auto;border-bottom:1px solid rgba(212,175,55,0.1);flex-wrap:wrap;}.tab-btn{padding:10px 18px;background:transparent;border:1px solid rgba(212,175,55,0.2);color:var(--gray);border-radius:8px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:0.85rem;white-space:nowrap;transition:0.3s;}.tab-btn:hover{border-color:var(--gold);color:var(--gold);}.tab-btn.active{background:var(--gradient-premium);color:var(--black);border-color:var(--gold);font-weight:700;}
+        .tab-content{display:none;padding:25px;max-width:900px;margin:0 auto;animation:fadeIn 0.3s;}.tab-content.active{display:block;}@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+        .tab-title{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);margin-bottom:20px;padding-bottom:8px;border-bottom:1px solid rgba(212,175,55,0.15);}
+        .form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
+        .data-card{background:rgba(26,26,46,0.8);border:1px solid rgba(212,175,55,0.1);border-radius:12px;padding:15px;margin-bottom:12px;display:flex;align-items:center;gap:12px;}.data-card:hover{border-color:var(--gold);}.data-card .info{flex:1;}.data-card .info h4{color:var(--gold);margin-bottom:4px;font-size:0.95rem;}.data-card .info p{color:var(--gray);font-size:0.8rem;}.data-card .actions{display:flex;gap:6px;}
+        .table-wrap{overflow-x:auto;border-radius:10px;border:1px solid rgba(212,175,55,0.1);}.admin-table{width:100%;border-collapse:collapse;}.admin-table th{background:rgba(212,175,55,0.1);color:var(--gold);padding:10px 12px;text-align:left;font-size:0.8rem;font-weight:600;}.admin-table td{padding:10px 12px;border-bottom:1px solid rgba(212,175,55,0.08);font-size:0.85rem;color:var(--gray);}
+        .toast{position:fixed;top:20px;right:20px;background:var(--dark);border:1px solid var(--gold);color:#fff;padding:12px 20px;border-radius:10px;z-index:9999;transform:translateX(400px);transition:0.4s;font-size:0.9rem;}.toast.show{transform:translateX(0);}.toast.success{border-color:var(--success);}.toast.error{border-color:var(--danger);}
+        .loading-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:99999;display:none;align-items:center;justify-content:center;flex-direction:column;gap:10px;}.loading-overlay.active{display:flex;}.spinner{width:40px;height:40px;border:3px solid rgba(212,175,55,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;}@keyframes spin{to{transform:rotate(360deg);}}.loading-text{color:var(--gold);font-size:0.85rem;}
+        .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9998;display:none;align-items:center;justify-content:center;}.modal-overlay.active{display:flex;}.modal{background:var(--dark);border:2px solid var(--gold);border-radius:15px;padding:25px;width:90%;max-width:450px;max-height:90vh;overflow-y:auto;}.modal h3{color:var(--gold);margin-bottom:15px;font-family:'Playfair Display',serif;}.modal .close-modal{float:right;background:none;border:none;color:var(--gray);font-size:1.3rem;cursor:pointer;}
+        .warning-box{background:rgba(255,193,7,0.1);border-left:3px solid #FFC107;padding:12px;margin-bottom:15px;border-radius:0 8px 8px 0;color:var(--gray);font-size:0.82rem;line-height:1.6;}.warning-box strong{color:#FFC107;}
+        .upload-area{border:2px dashed rgba(212,175,55,0.3);border-radius:10px;padding:30px;text-align:center;cursor:pointer;transition:0.3s;margin-bottom:15px;}.upload-area:hover{border-color:var(--gold);background:rgba(212,175,55,0.05);}.upload-area i{font-size:2rem;color:var(--gold);margin-bottom:8px;}.upload-area p{color:var(--gray);font-size:0.85rem;}.upload-preview{max-width:100%;max-height:150px;border-radius:8px;margin-top:8px;display:none;}
+        .settings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;}.settings-card{background:rgba(26,26,46,0.5);border:1px solid rgba(212,175,55,0.1);border-radius:12px;padding:20px;}.settings-card h4{color:var(--gold);margin-bottom:10px;font-size:1rem;}
+        @media(max-width:600px){.data-card{flex-direction:column;text-align:center;}.data-card .actions{justify-content:center;}.tabs{padding:10px;}.tab-content{padding:15px;}}
     </style>
 </head>
 <body>
-
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="spinner"></div>
-        <div class="loading-text">Memproses...</div>
-    </div>
-
-    <!-- Toast -->
+    <div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div><div class="loading-text">Memproses...</div></div>
     <div class="toast" id="toast"></div>
+    <div class="modal-overlay" id="editModal"><div class="modal" id="editModalContent"></div></div>
 
-    <!-- Edit Modal -->
-    <div class="modal-overlay" id="editModal">
-        <div class="modal" id="editModalContent">
-            <!-- Dynamic content -->
-        </div>
-    </div>
-
-    <!-- ===== LOGIN SCREEN ===== -->
+    <!-- LOGIN -->
     <div class="login-screen" id="loginScreen">
         <div class="login-box">
             <div class="login-logo">Grand Merysa</div>
-            <p class="login-sub">Admin Panel — Silakan login</p>
-            <div class="form-group">
-                <label><i class="fas fa-lock"></i> Password Admin</label>
-                <input type="password" id="adminPassword" placeholder="Masukkan password..." onkeypress="if(event.key==='Enter')doLogin()">
-            </div>
-            <button class="login-btn" onclick="doLogin()">
-                <i class="fas fa-sign-in-alt"></i> Login
-            </button>
+            <p class="login-sub">Admin Panel (Realtime DB)</p>
+            <div class="form-group"><label>Password Admin</label><input type="password" id="adminPassword" placeholder="Masukkan password..." onkeypress="if(event.key==='Enter')doLogin()"></div>
+            <button class="login-btn" onclick="doLogin()">Login</button>
             <p class="login-error" id="loginError">Password salah!</p>
-            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Kembali ke Website</a>
+            <a href="index.html" class="back-link">← Kembali ke Website</a>
         </div>
     </div>
 
-    <!-- ===== ADMIN PANEL ===== -->
+    <!-- ADMIN -->
     <div class="admin-panel" id="adminPanel">
         <header class="admin-header">
-            <div class="brand"><i class="fas fa-crown"></i> Admin Grand Merysa</div>
-            <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            <div class="brand">👑 Admin Grand Merysa</div>
+            <button class="logout-btn" onclick="doLogout()">Logout</button>
         </header>
-
-        <!-- Tabs -->
-        <div class="admin-tabs">
-            <button class="tab-btn active" onclick="switchTab('tab-prices')"><i class="fas fa-coins"></i> Harga Emas</button>
-            <button class="tab-btn" onclick="switchTab('tab-posts')"><i class="fas fa-images"></i> Postingan</button>
-            <button class="tab-btn" onclick="switchTab('tab-socials')"><i class="fas fa-share-alt"></i> Media Sosial</button>
-            <button class="tab-btn" onclick="switchTab('tab-profile')"><i class="fas fa-user-circle"></i> Profil</button>
-            <button class="tab-btn" onclick="switchTab('tab-background')"><i class="fas fa-image"></i> Background</button>
-            <button class="tab-btn" onclick="switchTab('tab-password')"><i class="fas fa-key"></i> Password</button>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('tab-prices')">💰 Harga Emas</button>
+            <button class="tab-btn" onclick="switchTab('tab-posts')">📸 Postingan</button>
+            <button class="tab-btn" onclick="switchTab('tab-socials')">🔗 Media Sosial</button>
+            <button class="tab-btn" onclick="switchTab('tab-assets')">🖼️ Profil & BG</button>
+            <button class="tab-btn" onclick="switchTab('tab-settings')">⚙️ Password & Reset</button>
         </div>
 
-        <!-- TAB: Harga Emas -->
+        <!-- HARGA EMAS -->
         <div class="tab-content active" id="tab-prices">
-            <h3 class="tab-title"><i class="fas fa-coins"></i> Kelola Harga Emas</h3>
-
-            <div class="form-group">
-                <label>Karat</label>
-                <select id="priceKarat">
-                    <option value="24">24 Karat</option>
-                    <option value="22">22 Karat</option>
-                    <option value="20">20 Karat</option>
-                    <option value="18">18 Karat</option>
-                    <option value="16">16 Karat</option>
-                    <option value="14">14 Karat</option>
-                    <option value="10">10 Karat</option>
-                    <option value="custom">Custom</option>
-                </select>
+            <h3 class="tab-title">Kelola Harga Emas</h3>
+            <div class="form-group"><label>Karat</label>
+                <select id="priceKarat"><option value="24">24 Karat</option><option value="22">22 Karat</option><option value="20">20 Karat</option><option value="18">18 Karat</option><option value="16">16 Karat</option><option value="14">14 Karat</option><option value="custom">Custom</option></select>
             </div>
-
             <div class="form-row">
-                <div class="form-group">
-                    <label>Harga Beli (Rp/gram)</label>
-                    <input type="number" id="priceBuy" placeholder="Contoh: 1000000">
-                </div>
-                <div class="form-group">
-                    <label>Harga Jual (Rp/gram)</label>
-                    <input type="number" id="priceSell" placeholder="Contoh: 1100000">
-                </div>
+                <div class="form-group"><label>Harga Beli (Rp/gram)</label><input type="number" id="priceBuy" placeholder="0"></div>
+                <div class="form-group"><label>Harga Jual (Rp/gram)</label><input type="number" id="priceSell" placeholder="0"></div>
             </div>
-
-            <button class="btn btn-gold" onclick="addGoldPrice()">
-                <i class="fas fa-plus"></i> Tambah / Update Harga
-            </button>
-
-            <hr style="border-color: rgba(212,175,55,0.1); margin: 25px 0;">
-
-            <h4 style="color: var(--gold); margin-bottom: 15px;">Daftar Harga Emas</h4>
-            <div class="table-responsive">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Karat</th>
-                            <th>Harga Beli</th>
-                            <th>Harga Jual</th>
-                            <th>Terakhir Update</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="pricesTableBody">
-                    </tbody>
-                </table>
-            </div>
+            <button class="btn btn-gold" onclick="addGoldPrice()">💾 Simpan Harga</button>
+            <hr style="border-color:rgba(212,175,55,0.1);margin:20px 0;">
+            <h4 style="color:var(--gold);margin-bottom:10px;">Daftar Harga</h4>
+            <div class="table-wrap"><table class="admin-table"><thead><tr><th>Karat</th><th>Beli</th><th>Jual</th><th>Update</th><th>Aksi</th></tr></thead><tbody id="pricesTableBody"></tbody></table></div>
         </div>
 
-        <!-- TAB: Postingan -->
+        <!-- POSTINGAN -->
         <div class="tab-content" id="tab-posts">
-            <h3 class="tab-title"><i class="fas fa-images"></i> Kelola Postingan</h3>
-
-            <div class="form-group">
-                <label>Jenis Postingan</label>
-                <select id="postType" onchange="togglePostFields()">
-                    <option value="photo">📷 Foto</option>
-                    <option value="youtube">▶️ YouTube Embed</option>
-                    <option value="tiktok">🎵 TikTok Embed</option>
-                    <option value="instagram">📸 Instagram Embed</option>
-                    <option value="facebook">📘 Facebook Embed</option>
-                </select>
+            <h3 class="tab-title">Kelola Postingan</h3>
+            <div class="warning-box">⚠️ Gambar dikompres otomatis ke Base64 agar muat di Realtime Database (aman & hemat).</div>
+            <div class="form-group"><label>Jenis</label>
+                <select id="postType" onchange="togglePostFields()"><option value="photo">📷 Foto</option><option value="youtube">▶️ YouTube</option><option value="tiktok">🎵 TikTok</option><option value="instagram">📸 Instagram</option><option value="facebook">📘 Facebook</option></select>
             </div>
-
-            <div class="form-group">
-                <label>Judul</label>
-                <input type="text" id="postTitle" placeholder="Judul postingan...">
-            </div>
-
-            <div class="form-group">
-                <label>Deskripsi</label>
-                <textarea id="postDesc" placeholder="Deskripsi postingan..."></textarea>
-            </div>
-
-            <!-- Photo Upload -->
-            <div id="photoFields">
-                <div class="form-group">
-                    <label>Upload Foto</label>
-                    <div class="upload-area" onclick="document.getElementById('postImageInput').click()">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>Klik untuk upload foto</p>
-                        <input type="file" id="postImageInput" accept="image/*" style="display:none" onchange="previewImage(this, 'postPreview')">
-                        <img class="upload-preview" id="postPreview">
-                    </div>
-                </div>
-            </div>
-
-            <!-- YouTube Embed -->
-            <div id="youtubeFields" style="display:none">
-                <div class="form-group">
-                    <label>Link YouTube atau Embed URL</label>
-                    <input type="text" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=... atau https://www.youtube.com/embed/...">
-                    <div class="embed-help">
-                        <strong>Cara embed YouTube:</strong><br>
-                        1. Buka video YouTube → Klik <code>Share</code> → <code>Embed</code><br>
-                        2. Copy URL dari <code>src="..."</code><br>
-                        3. Atau paste link video biasa, otomatis dikonversi
-                    </div>
-                </div>
-            </div>
-
-            <!-- TikTok Embed -->
-            <div id="tiktokFields" style="display:none">
-                <div class="form-group">
-                    <label>Link TikTok</label>
-                    <input type="text" id="tiktokUrl" placeholder="https://www.tiktok.com/@user/video/...">
-                    <div class="embed-help">
-                        <strong>Cara embed TikTok:</strong><br>
-                        1. Buka video TikTok → Klik <code>Share</code> → <code>Embed</code><br>
-                        2. Copy seluruh kode embed HTML<br>
-                        3. Atau paste link video biasa
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Atau paste kode embed HTML</label>
-                    <textarea id="tiktokEmbed" placeholder='<blockquote class="tiktok-embed"...' style="min-height:80px"></textarea>
-                </div>
-            </div>
-
-            <!-- Instagram Embed -->
-            <div id="instagramFields" style="display:none">
-                <div class="form-group">
-                    <label>Link Instagram</label>
-                    <input type="text" id="igUrl" placeholder="https://www.instagram.com/p/...">
-                    <div class="embed-help">
-                        <strong>Cara embed Instagram:</strong><br>
-                        1. Buka postingan → Klik <code>...</code> → <code>Embed</code><br>
-                        2. Copy seluruh kode embed HTML<br>
-                        3. Atau paste link postingan biasa
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Atau paste kode embed HTML</label>
-                    <textarea id="igEmbed" placeholder='<blockquote class="instagram-media"...' style="min-height:80px"></textarea>
-                </div>
-            </div>
-
-            <!-- Facebook Embed -->
-            <div id="facebookFields" style="display:none">
-                <div class="form-group">
-                    <label>Link Facebook</label>
-                    <input type="text" id="fbUrl" placeholder="https://www.facebook.com/.../posts/...">
-                    <div class="embed-help">
-                        <strong>Cara embed Facebook:</strong><br>
-                        1. Buka postingan → Klik <code>...</code> → <code>Embed</code><br>
-                        2. Copy kode iframe atau paste link postingan
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Atau paste kode embed HTML</label>
-                    <textarea id="fbEmbed" placeholder='<iframe src="https://www.facebook.com/plugins/post.php"...' style="min-height:80px"></textarea>
-                </div>
-            </div>
-
-            <button class="btn btn-gold" onclick="addPost()">
-                <i class="fas fa-plus"></i> Posting
-            </button>
-
-            <hr style="border-color: rgba(212,175,55,0.1); margin: 25px 0;">
-
-            <h4 style="color: var(--gold); margin-bottom: 15px;">Daftar Postingan</h4>
-            <div id="postsList">
-                <!-- Dynamic -->
-            </div>
+            <div class="form-group"><label>Judul</label><input type="text" id="postTitle" placeholder="Judul..."></div>
+            <div class="form-group"><label>Deskripsi</label><textarea id="postDesc" placeholder="Keterangan..."></textarea></div>
+            <div id="photoFields"><div class="form-group"><label>Upload Foto</label><div class="upload-area" onclick="document.getElementById('postImageInput').click()"><i class="fas fa-cloud-upload-alt"></i><p>Klik pilih foto</p><input type="file" id="postImageInput" accept="image/*" style="display:none" onchange="previewImage(this,'postPreview')"><img class="upload-preview" id="postPreview"></div></div></div>
+            <div id="youtubeFields" style="display:none"><div class="form-group"><label>Link YouTube</label><input type="text" id="youtubeUrl" placeholder="https://youtu.be/..."></div></div>
+            <div id="tiktokFields" style="display:none"><div class="form-group"><label>Link TikTok</label><input type="text" id="tiktokUrl" placeholder="https://tiktok.com/@.../video/..."></div></div>
+            <div id="instagramFields" style="display:none"><div class="form-group"><label>Link Instagram</label><input type="text" id="igUrl" placeholder="https://instagram.com/p/..."></div></div>
+            <div id="facebookFields" style="display:none"><div class="form-group"><label>Link Facebook</label><input type="text" id="fbUrl" placeholder="https://facebook.com/..."></div></div>
+            <button class="btn btn-gold" onclick="addPost()">📤 Posting</button>
+            <hr style="border-color:rgba(212,175,55,0.1);margin:20px 0;">
+            <div id="postsList"></div>
         </div>
 
-        <!-- TAB: Media Sosial -->
+        <!-- SOSIAL -->
         <div class="tab-content" id="tab-socials">
-            <h3 class="tab-title"><i class="fas fa-share-alt"></i> Kelola Media Sosial</h3>
-
+            <h3 class="tab-title">Media Sosial</h3>
             <div class="settings-grid">
-                <div class="settings-card">
-                    <h4><i class="fab fa-whatsapp"></i> WhatsApp</h4>
-                    <div class="form-group">
-                        <label>Nomor (format: 628xxx)</label>
-                        <input type="text" id="socialWA" placeholder="6281234567890">
-                    </div>
-                </div>
-                <div class="settings-card">
-                    <h4><i class="fab fa-instagram"></i> Instagram</h4>
-                    <div class="form-group">
-                        <label>URL Profil</label>
-                        <input type="text" id="socialIG" placeholder="https://instagram.com/grandmerysa">
-                    </div>
-                </div>
-                <div class="settings-card">
-                    <h4><i class="fab fa-facebook"></i> Facebook</h4>
-                    <div class="form-group">
-                        <label>URL Halaman</label>
-                        <input type="text" id="socialFB" placeholder="https://facebook.com/grandmerysa">
-                    </div>
-                </div>
-                <div class="settings-card">
-                    <h4><i class="fab fa-tiktok"></i> TikTok</h4>
-                    <div class="form-group">
-                        <label>URL Profil</label>
-                        <input type="text" id="socialTT" placeholder="https://tiktok.com/@grandmerysa">
-                    </div>
-                </div>
-                <div class="settings-card">
-                    <h4><i class="fab fa-youtube"></i> YouTube</h4>
-                    <div class="form-group">
-                        <label>URL Channel</label>
-                        <input type="text" id="socialYT" placeholder="https://youtube.com/@grandmerysa">
-                    </div>
-                </div>
+                <div class="settings-card"><h4>WhatsApp</h4><div class="form-group"><input type="text" id="socialWA" placeholder="628xxx"></div></div>
+                <div class="settings-card"><h4>Instagram</h4><div class="form-group"><input type="text" id="socialIG" placeholder="https://instagram.com/..."></div></div>
+                <div class="settings-card"><h4>Facebook</h4><div class="form-group"><input type="text" id="socialFB" placeholder="https://facebook.com/..."></div></div>
+                <div class="settings-card"><h4>TikTok</h4><div class="form-group"><input type="text" id="socialTT" placeholder="https://tiktok.com/@..."></div></div>
+                <div class="settings-card"><h4>YouTube</h4><div class="form-group"><input type="text" id="socialYT" placeholder="https://youtube.com/@..."></div></div>
             </div>
-
-            <br>
-            <button class="btn btn-gold" onclick="saveSocials()">
-                <i class="fas fa-save"></i> Simpan Media Sosial
-            </button>
+            <br><button class="btn btn-gold" onclick="saveSocials()">💾 Simpan</button>
         </div>
 
-        <!-- TAB: Profil -->
-        <div class="tab-content" id="tab-profile">
-            <h3 class="tab-title"><i class="fas fa-user-circle"></i> Foto Profil Toko</h3>
-
-            <div class="form-group">
-                <label>Upload Foto Profil</label>
-                <div class="upload-area" onclick="document.getElementById('profileInput').click()">
-                    <i class="fas fa-camera"></i>
-                    <p>Klik untuk upload foto profil (bulat)</p>
-                    <input type="file" id="profileInput" accept="image/*" style="display:none" onchange="previewImage(this, 'profilePreview')">
-                    <img class="upload-preview" id="profilePreview">
-                </div>
-            </div>
-
-            <div style="text-align:center; margin: 15px 0;">
-                <img id="currentProfileImg" src="" style="width:100px;height:100px;border-radius:50%;border:3px solid var(--gold);object-fit:cover;display:none;">
-                <p style="color:var(--gray);font-size:0.8rem;margin-top:5px;">Foto profil saat ini</p>
-            </div>
-
-            <button class="btn btn-gold" onclick="uploadProfile()">
-                <i class="fas fa-upload"></i> Upload Foto Profil
-            </button>
+        <!-- ASET -->
+        <div class="tab-content" id="tab-assets">
+            <h3 class="tab-title">Profil & Background</h3>
+            <div class="form-group"><label>Foto Profil</label><div class="upload-area" onclick="document.getElementById('profileInput').click()"><i class="fas fa-user-circle"></i><p>Upload foto profil</p><input type="file" id="profileInput" accept="image/*" style="display:none" onchange="previewImage(this,'profilePreview')"><img class="upload-preview" id="profilePreview"></div></div>
+            <button class="btn btn-gold" onclick="uploadProfile()" style="margin-bottom:20px;">Upload Profil</button>
+            <hr style="border-color:rgba(212,175,55,0.1);margin:20px 0;">
+            <div class="form-group"><label>Background Hero</label><div class="upload-area" onclick="document.getElementById('bgInput').click()"><i class="fas fa-image"></i><p>Upload background</p><input type="file" id="bgInput" accept="image/*" style="display:none" onchange="previewImage(this,'bgPreview')"><img class="upload-preview" id="bgPreview"></div></div>
+            <button class="btn btn-gold" onclick="uploadBackground()">Upload Background</button>
+            <br><br><button class="btn btn-danger" onclick="removeBackground()">🗑️ Hapus Background</button>
         </div>
 
-        <!-- TAB: Background -->
-        <div class="tab-content" id="tab-background">
-            <h3 class="tab-title"><i class="fas fa-image"></i> Background Hero</h3>
-
-            <div class="form-group">
-                <label>Upload Gambar Background</label>
-                <div class="upload-area" onclick="document.getElementById('bgInput').click()">
-                    <i class="fas fa-mountain"></i>
-                    <p>Klik untuk upload background hero (rekomendasi: 1920x1080)</p>
-                    <input type="file" id="bgInput" accept="image/*" style="display:none" onchange="previewImage(this, 'bgPreview')">
-                    <img class="upload-preview" id="bgPreview">
-                </div>
-            </div>
-
-            <div style="text-align:center; margin: 15px 0;">
-                <img id="currentBgImg" src="" style="max-width:100%;max-height:200px;border-radius:10px;border:2px solid rgba(212,175,55,0.3);display:none;">
-                <p style="color:var(--gray);font-size:0.8rem;margin-top:5px;">Background saat ini</p>
-            </div>
-
-            <button class="btn btn-gold" onclick="uploadBackground()">
-                <i class="fas fa-upload"></i> Upload Background
-            </button>
-
-            <br><br>
-            <button class="btn btn-danger" onclick="removeBackground()">
-                <i class="fas fa-trash"></i> Hapus Background (Gunakan Default)
-            </button>
-        </div>
-
-        <!-- TAB: Password -->
-        <div class="tab-content" id="tab-password">
-            <h3 class="tab-title"><i class="fas fa-key"></i> Ubah Password Admin</h3>
-
-            <div class="form-group">
-                <label>Password Saat Ini</label>
-                <input type="password" id="currentPass" placeholder="Password sekarang...">
-            </div>
-            <div class="form-group">
-                <label>Password Baru</label>
-                <input type="password" id="newPass" placeholder="Password baru...">
-            </div>
-            <div class="form-group">
-                <label>Konfirmasi Password Baru</label>
-                <input type="password" id="confirmPass" placeholder="Ulangi password baru...">
-            </div>
-
-            <button class="btn btn-gold" onclick="changePassword()">
-                <i class="fas fa-save"></i> Ubah Password
-            </button>
-
-            <hr style="border-color: rgba(212,175,55,0.1); margin: 25px 0;">
-
-            <h4 style="color: var(--danger); margin-bottom: 10px;"><i class="fas fa-exclamation-triangle"></i> Zona Bahaya</h4>
-            <p style="color: var(--gray); font-size: 0.85rem; margin-bottom: 15px;">Reset semua data harga emas (tidak bisa dibatalkan)</p>
-            <button class="btn btn-danger" onclick="resetAllPrices()">
-                <i class="fas fa-trash"></i> Reset Semua Harga Emas
-            </button>
+        <!-- SETTINGS -->
+        <div class="tab-content" id="tab-settings">
+            <h3 class="tab-title">Password & Reset</h3>
+            <div class="form-group"><label>Password Lama</label><input type="password" id="oldPass"></div>
+            <div class="form-group"><label>Password Baru</label><input type="password" id="newPass"></div>
+            <button class="btn btn-gold" onclick="changePassword()">Ubah Password</button>
+            <hr style="border-color:rgba(212,175,55,0.1);margin:20px 0;">
+            <h4 style="color:var(--danger);">⚠️ Zona Bahaya</h4>
+            <p style="color:var(--gray);font-size:0.85rem;margin-bottom:10px;">Hapus semua data harga emas</p>
+            <button class="btn btn-danger" onclick="resetAllPrices()">Reset Harga Emas</button>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
+    <!-- FIREBASE SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
     <script>
-        // ===== FIREBASE CONFIG =====
+        // 🔴 GANTI DENGAN CONFIG FIREBASE KAMU
         const firebaseConfig = {
-  apiKey: "AIzaSyA33zhg4xr9z5YOug7KtbfQ7kJC5k7FDao",
-  authDomain: "toko-mas-merysa.firebaseapp.com",
-  projectId: "toko-mas-merysa",
-  storageBucket: "toko-mas-merysa.firebasestorage.app",
-  messagingSenderId: "798589661914",
-  appId: "1:798589661914:web:bd71fb265b4ae85249ebe3"
+  apiKey: "AIzaSyC0bcwa2YrzOTHQZRjNUdxd-tPbbAJbTdo",
+  authDomain: "grand-merysa.firebaseapp.com",
+  databaseURL: "https://grand-merysa-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "grand-merysa",
+  storageBucket: "grand-merysa.firebasestorage.app",
+  messagingSenderId: "742864038822",
+  appId: "1:742864038822:web:cb5d6f6399238dd43dbd67"
 };
         
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const storage = firebase.storage();
-
-        // ===== ADMIN PASSWORD =====
+        try {
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.database();
+            console.log("✅ Firebase Realtime Database terhubung");
+        } catch(e) {
+            console.error("❌ Gagal inisialisasi Firebase:", e);
+            alert("Firebase Config Salah! Cek console browser (F12) untuk detail.");
+        }
+        
         const DEFAULT_PASSWORD = "admin123";
+        const getPass = () => localStorage.getItem('gm_admin_pass') || DEFAULT_PASSWORD;
+        const setPass = p => localStorage.setItem('gm_admin_pass', p);
 
-        function getStoredPassword() {
-            return localStorage.getItem('admin_password') || DEFAULT_PASSWORD;
+        // UTILS
+        function showToast(m, t='') { const e=document.getElementById('toast'); e.textContent=m; e.className=`toast show ${t}`; setTimeout(()=>e.classList.remove('show'),3000); }
+        function showLoading(v) { document.getElementById('loadingOverlay').classList.toggle('active', v); }
+        function closeModal() { document.getElementById('editModal').classList.remove('active'); }
+        document.getElementById('editModal').onclick = e => e.target===document.getElementById('editModal') && closeModal();
+        function switchTab(id) { document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active')); document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); document.getElementById(id).classList.add('active'); event.target.classList.add('active'); }
+        function formatRupiah(n) { return 'Rp '+Number(n).toLocaleString('id-ID'); }
+        function previewImage(i, id) { const f=i.files[0]; if(!f)return; const r=new FileReader(); r.onload=e=>{const p=document.getElementById(id);p.src=e.target.result;p.style.display='block';};r.readAsDataURL(f); }
+        function compressToBase64(file, maxW=800, q=0.75) {
+            return new Promise((res, rej) => {
+                const r=new FileReader(); r.readAsDataURL(file);
+                r.onload=e=>{const img=new Image();img.src=e.target.result;img.onload=()=>{const c=document.createElement('canvas');let w=img.width,h=img.height;if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);res(c.toDataURL('image/jpeg',q));};img.onerror=rej;};r.onerror=rej;
+            });
         }
 
-        function setStoredPassword(pass) {
-            localStorage.setItem('admin_password', pass);
-        }
-
-        // ===== LOGIN =====
+        // LOGIN
         function doLogin() {
-            const pass = document.getElementById('adminPassword').value;
-            if (pass === getStoredPassword()) {
+            const p=document.getElementById('adminPassword').value;
+            if(p===getPass()) {
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('adminPanel').classList.add('active');
                 loadAdminData();
                 showToast('Login berhasil!', 'success');
-            } else {
-                document.getElementById('loginError').style.display = 'block';
-                setTimeout(() => document.getElementById('loginError').style.display = 'none', 3000);
-            }
+            } else { document.getElementById('loginError').style.display='block'; setTimeout(()=>document.getElementById('loginError').style.display='none',2000); }
         }
+        function doLogout() { document.getElementById('loginScreen').classList.remove('hidden'); document.getElementById('adminPanel').classList.remove('active'); document.getElementById('adminPassword').value=''; }
 
-        function doLogout() {
-            document.getElementById('loginScreen').classList.remove('hidden');
-            document.getElementById('adminPanel').classList.remove('active');
-            document.getElementById('adminPassword').value = '';
-        }
-
-        // ===== TABS =====
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.target.closest('.tab-btn').classList.add('active');
-        }
-
-        // ===== TOAST =====
-        function showToast(msg, type = '') {
-            const toast = document.getElementById('toast');
-            toast.textContent = msg;
-            toast.className = 'toast show ' + type;
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-
-        // ===== LOADING =====
-        function showLoading(show) {
-            document.getElementById('loadingOverlay').classList.toggle('active', show);
-        }
-
-        // ===== IMAGE PREVIEW =====
-        function previewImage(input, previewId) {
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = e => {
-                    const preview = document.getElementById(previewId);
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        // ===== UPLOAD TO FIREBASE STORAGE =====
-        async function uploadToStorage(file, path) {
-            const ref = storage.ref(path);
-            const snapshot = await ref.put(file);
-            return await snapshot.ref.getDownloadURL();
-        }
-
-        // ===== TOGGLE POST FIELDS =====
-        function togglePostFields() {
-            const type = document.getElementById('postType').value;
-            document.getElementById('photoFields').style.display = type === 'photo' ? 'block' : 'none';
-            document.getElementById('youtubeFields').style.display = type === 'youtube' ? 'block' : 'none';
-            document.getElementById('tiktokFields').style.display = type === 'tiktok' ? 'block' : 'none';
-            document.getElementById('instagramFields').style.display = type === 'instagram' ? 'block' : 'none';
-            document.getElementById('facebookFields').style.display = type === 'facebook' ? 'block' : 'none';
-        }
-
-        // ===== FORMAT CURRENCY =====
-        function formatRupiah(num) {
-            return 'Rp ' + Number(num).toLocaleString('id-ID');
-        }
-
-        // ===== GOLD PRICES =====
+        // HARGA EMAS (RTDB)
         function addGoldPrice() {
-            const karatSelect = document.getElementById('priceKarat');
-            let karat = karatSelect.value;
-            if (karat === 'custom') {
-                karat = prompt('Masukkan karat (angka):');
-                if (!karat) return;
-            }
-            const buyPrice = parseInt(document.getElementById('priceBuy').value) || 0;
-            const sellPrice = parseInt(document.getElementById('priceSell').value) || 0;
-
-            if (buyPrice === 0 && sellPrice === 0) {
-                showToast('Masukkan minimal satu harga!', 'error');
-                return;
-            }
-
+            let k=document.getElementById('priceKarat').value;
+            if(k==='custom'){k=prompt('Masukkan angka karat:'); if(!k||isNaN(k)) return showToast('Karat harus angka!','error');}
+            const b=parseInt(document.getElementById('priceBuy').value)||0, s=parseInt(document.getElementById('priceSell').value)||0;
+            if(!b&&!s) return showToast('Masukkan minimal 1 harga!','error');
             showLoading(true);
-
-            db.collection('goldPrices').doc(karat).set({
-                karat: karat,
-                buyPrice: buyPrice,
-                sellPrice: sellPrice,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => {
-                showToast(`Harga Emas ${karat}K berhasil disimpan!`, 'success');
-                document.getElementById('priceBuy').value = '';
-                document.getElementById('priceSell').value = '';
-                loadPricesTable();
-            }).catch(err => {
-                showToast('Error: ' + err.message, 'error');
-            }).finally(() => showLoading(false));
+            db.ref('goldPrices/' + k).set({
+                karat: k, buyPrice: b, sellPrice: s, updatedAt: Date.now()
+            }).then(()=>{
+                showToast(`Harga ${k}K tersimpan!`,'success');
+                document.getElementById('priceBuy').value=''; document.getElementById('priceSell').value='';
+            }).catch(e=>{
+                showToast('Gagal simpan: '+e.message,'error');
+                console.error(e);
+            }).finally(()=>showLoading(false));
         }
-
         function loadPricesTable() {
-            db.collection('goldPrices').orderBy('karat', 'desc').onSnapshot(snapshot => {
-                const tbody = document.getElementById('pricesTableBody');
-                if (snapshot.empty) {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--gray);">Belum ada data</td></tr>';
-                    return;
-                }
-
-                let html = '';
-                snapshot.forEach(docSnap => {
-                    const data = docSnap.data();
-                    const date = data.updatedAt ? new Date(data.updatedAt.toDate()).toLocaleString('id-ID') : '-';
-                    html += `
-                        <tr>
-                            <td style="color:var(--gold);font-weight:700;">${data.karat}K</td>
-                            <td>${formatRupiah(data.buyPrice)}</td>
-                            <td>${formatRupiah(data.sellPrice)}</td>
-                            <td>${date}</td>
-                            <td>
-                                <button class="btn btn-edit btn-sm" onclick="editPrice('${docSnap.id}')"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-danger btn-sm" onclick="deletePrice('${docSnap.id}')"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    `;
+            db.ref('goldPrices').on('value', (snapshot) => {
+                const data = snapshot.val() || {};
+                const arr = Object.keys(data).map(key => ({ id: key, ...data[key] })).sort((a,b) => b.karat - a.karat);
+                const tb = document.getElementById('pricesTableBody');
+                if(arr.length===0){tb.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray);">Belum ada data</td></tr>';return;}
+                let h='';
+                arr.forEach(d=>{
+                    const dt = d.updatedAt ? new Date(d.updatedAt).toLocaleString('id-ID') : '-';
+                    h+=`<tr><td style="color:var(--gold);font-weight:700;">${d.karat}K</td><td>${formatRupiah(d.buyPrice)}</td><td>${formatRupiah(d.sellPrice)}</td><td>${dt}</td><td><button class="btn btn-edit btn-sm" onclick="editPrice('${d.id}')"><i class="fas fa-edit"></i></button> <button class="btn btn-danger btn-sm" onclick="deletePrice('${d.id}')"><i class="fas fa-trash"></i></button></td></tr>`;
                 });
-                tbody.innerHTML = html;
+                tb.innerHTML=h;
             });
         }
-
-        function editPrice(id) {
-            db.collection('goldPrices').doc(id).get().then(doc => {
-                if (!doc.exists) return;
-                const data = doc.data();
-                const modal = document.getElementById('editModalContent');
-                modal.innerHTML = `
-                    <button class="close-modal" onclick="closeModal()">&times;</button>
-                    <h3><i class="fas fa-edit"></i> Edit Harga Emas ${data.karat}K</h3>
-                    <div class="form-group">
-                        <label>Karat</label>
-                        <input type="text" id="editKarat" value="${data.karat}">
-                    </div>
-                    <div class="form-group">
-                        <label>Harga Beli</label>
-                        <input type="number" id="editBuy" value="${data.buyPrice}">
-                    </div>
-                    <div class="form-group">
-                        <label>Harga Jual</label>
-                        <input type="number" id="editSell" value="${data.sellPrice}">
-                    </div>
-                    <button class="btn btn-gold" onclick="saveEditPrice('${id}')"><i class="fas fa-save"></i> Simpan</button>
-                `;
+        function editPrice(id) { 
+            db.ref('goldPrices/' + id).once('value').then(s=>{
+                if(!s.exists())return; const d=s.val();
+                document.getElementById('editModalContent').innerHTML=`<button class="close-modal" onclick="closeModal()">&times;</button><h3>Edit Harga</h3><div class="form-group"><label>Karat</label><input id="eK" value="${d.karat}"></div><div class="form-row"><div class="form-group"><label>Beli</label><input id="eB" type="number" value="${d.buyPrice}"></div><div class="form-group"><label>Jual</label><input id="eS" type="number" value="${d.sellPrice}"></div></div><button class="btn btn-gold" onclick="saveEditPrice('${id}')">Simpan</button>`;
                 document.getElementById('editModal').classList.add('active');
             });
         }
+        function saveEditPrice(id) { showLoading(true); db.ref('goldPrices/' + id).update({karat:document.getElementById('eK').value,buyPrice:parseInt(document.getElementById('eB').value)||0,sellPrice:parseInt(document.getElementById('eS').value)||0,updatedAt:Date.now()}).then(()=>{showToast('Update berhasil!','success');closeModal();}).catch(e=>showToast('Error: '+e.message,'error')).finally(()=>showLoading(false)); }
+        function deletePrice(id) { if(confirm('Hapus harga ini?')) { showLoading(true); db.ref('goldPrices/' + id).remove().then(()=>showToast('Dihapus!','success')).catch(e=>showToast('Error: '+e.message,'error')).finally(()=>showLoading(false)); } }
+        function resetAllPrices() { if(confirm('Yakin reset semua harga?')) { showLoading(true); db.ref('goldPrices').remove().then(()=>showToast('Reset berhasil!','success')).catch(e=>showToast('Error: '+e.message,'error')).finally(()=>showLoading(false)); } }
 
-        function saveEditPrice(id) {
-            showLoading(true);
-            db.collection('goldPrices').doc(id).update({
-                karat: document.getElementById('editKarat').value,
-                buyPrice: parseInt(document.getElementById('editBuy').value) || 0,
-                sellPrice: parseInt(document.getElementById('editSell').value) || 0,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(() => {
-                showToast('Harga berhasil diupdate!', 'success');
-                closeModal();
-            }).catch(err => {
-                showToast('Error: ' + err.message, 'error');
-            }).finally(() => showLoading(false));
-        }
-
-        function deletePrice(id) {
-            if (confirm('Yakin ingin menghapus harga ini?')) {
-                showLoading(true);
-                db.collection('goldPrices').doc(id).delete().then(() => {
-                    showToast('Harga berhasil dihapus!', 'success');
-                }).catch(err => {
-                    showToast('Error: ' + err.message, 'error');
-                }).finally(() => showLoading(false));
-            }
-        }
-
-        function resetAllPrices() {
-            if (confirm('Yakin reset semua data harga emas? Tindakan ini tidak bisa dibatalkan!')) {
-                showLoading(true);
-                db.collection('goldPrices').get().then(snapshot => {
-                    const batch = db.batch();
-                    snapshot.docs.forEach(doc => batch.delete(doc.ref));
-                    return batch.commit();
-                }).then(() => {
-                    showToast('Semua harga emas berhasil direset!', 'success');
-                }).catch(err => {
-                    showToast('Error: ' + err.message, 'error');
-                }).finally(() => showLoading(false));
-            }
-        }
-
-        // ===== POSTS =====
-        function getYoutubeEmbedUrl(url) {
-            let videoId = '';
-            if (url.includes('youtube.com/watch')) {
-                videoId = new URL(url).searchParams.get('v');
-            } else if (url.includes('youtu.be/')) {
-                videoId = url.split('youtu.be/')[1].split('?')[0];
-            } else if (url.includes('embed')) {
-                return url;
-            }
-            return videoId ? `https://www.youtube.com/embed/${videoId}` : '';
-        }
-
-        function getTiktokEmbed(url, code) {
-            if (code) return code;
-            if (url) {
-                return `<blockquote class="tiktok-embed" cite="${url}" data-video-id="${url}" style="max-width: 605px;min-width: 325px;"><section></section></blockquote>`;
-            }
-            return '';
-        }
-
-        function getIgEmbed(url, code) {
-            if (code) return code;
-            if (url) {
-                return `<blockquote class="instagram-media" data-instgrm-permalink="${url}" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; margin:1px; max-width:540px; min-width:326px; padding:0; width:99.375%;"></blockquote>`;
-            }
-            return '';
-        }
-
-        function getFbEmbed(url, code) {
-            if (code) return code;
-            if (url) {
-                return `<iframe src="https://www.facebook.com/plugins/post.php?href=${encodeURIComponent(url)}&width=500" width="500" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>`;
-            }
-            return '';
-        }
-
+        // POSTS (RTDB)
+        function togglePostFields() { ['photo','youtube','tiktok','instagram','facebook'].forEach(f=>document.getElementById(f+'Fields').style.display=document.getElementById('postType').value===f?'block':'none'); }
+        function getYoutubeEmbed(u) { let v=''; if(u.includes('watch'))v=new URL(u).searchParams.get('v'); else if(u.includes('youtu.be/'))v=u.split('youtu.be/')[1].split('?')[0]; else if(u.includes('embed'))return u; return v?`https://www.youtube.com/embed/${v}`:''; }
         function addPost() {
-            const type = document.getElementById('postType').value;
-            const title = document.getElementById('postTitle').value.trim();
-            const desc = document.getElementById('postDesc').value.trim();
-
-            if (!title) {
-                showToast('Masukkan judul postingan!', 'error');
-                return;
-            }
-
+            const t=document.getElementById('postType').value, title=document.getElementById('postTitle').value.trim(), desc=document.getElementById('postDesc').value.trim();
+            if(!title) return showToast('Judul wajib!','error');
             showLoading(true);
-
-            const postData = {
-                title: title,
-                description: desc,
-                type: type,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            };
-
-            const processPost = () => {
-                db.collection('posts').add(postData).then(() => {
-                    showToast('Postingan berhasil ditambahkan!', 'success');
-                    document.getElementById('postTitle').value = '';
-                    document.getElementById('postDesc').value = '';
-                    document.getElementById('postImageInput').value = '';
-                    document.getElementById('postPreview').style.display = 'none';
-                    document.getElementById('youtubeUrl').value = '';
-                    document.getElementById('tiktokUrl').value = '';
-                    document.getElementById('tiktokEmbed').value = '';
-                    document.getElementById('igUrl').value = '';
-                    document.getElementById('igEmbed').value = '';
-                    document.getElementById('fbUrl').value = '';
-                    document.getElementById('fbEmbed').value = '';
-                    loadPostsList();
-                }).catch(err => {
-                    showToast('Error: ' + err.message, 'error');
-                }).finally(() => showLoading(false));
-            };
-
-            if (type === 'photo') {
-                const fileInput = document.getElementById('postImageInput');
-                if (fileInput.files[0]) {
-                    uploadToStorage(fileInput.files[0], `posts/${Date.now()}_${fileInput.files[0].name}`).then(url => {
-                        postData.imageUrl = url;
-                        processPost();
-                    }).catch(err => {
-                        showToast('Upload error: ' + err.message, 'error');
-                        showLoading(false);
-                    });
-                } else {
-                    showToast('Pilih foto terlebih dahulu!', 'error');
-                    showLoading(false);
-                }
-            } else if (type === 'youtube') {
-                const url = document.getElementById('youtubeUrl').value.trim();
-                postData.embedUrl = getYoutubeEmbedUrl(url);
-                if (!postData.embedUrl) {
-                    showToast('Link YouTube tidak valid!', 'error');
-                    showLoading(false);
-                    return;
-                }
-                processPost();
-            } else if (type === 'tiktok') {
-                const url = document.getElementById('tiktokUrl').value.trim();
-                const code = document.getElementById('tiktokEmbed').value.trim();
-                postData.embedCode = getTiktokEmbed(url, code);
-                if (!postData.embedCode) {
-                    showToast('Masukkan link atau kode embed TikTok!', 'error');
-                    showLoading(false);
-                    return;
-                }
-                processPost();
-            } else if (type === 'instagram') {
-                const url = document.getElementById('igUrl').value.trim();
-                const code = document.getElementById('igEmbed').value.trim();
-                postData.embedCode = getIgEmbed(url, code);
-                if (!postData.embedCode) {
-                    showToast('Masukkan link atau kode embed Instagram!', 'error');
-                    showLoading(false);
-                    return;
-                }
-                processPost();
-            } else if (type === 'facebook') {
-                const url = document.getElementById('fbUrl').value.trim();
-                const code = document.getElementById('fbEmbed').value.trim();
-                postData.embedCode = getFbEmbed(url, code);
-                if (!postData.embedCode) {
-                    showToast('Masukkan link atau kode embed Facebook!', 'error');
-                    showLoading(false);
-                    return;
-                }
-                processPost();
-            }
+            const data={title,description:desc,type:t,createdAt:Date.now()};
+            const save=()=>db.ref('posts').push(data).then(()=>{showToast('Posting berhasil!','success');document.getElementById('postTitle').value='';document.getElementById('postDesc').value='';document.getElementById('postImageInput').value='';document.getElementById('postPreview').style.display='none';['youtubeUrl','tiktokUrl','igUrl','fbUrl'].forEach(i=>document.getElementById(i).value='');}).catch(e=>showToast('Error: '+e.message,'error')).finally(()=>showLoading(false));
+            if(t==='photo') { const f=document.getElementById('postImageInput').files[0]; if(!f) return showToast('Pilih foto!','error'),showLoading(false); compressToBase64(f,800,0.75).then(b64=>{data.imageUrl=b64;save();}).catch(()=>showToast('Gagal proses gambar','error')); }
+            else { const u=document.getElementById(t+'Url')?.value.trim(); data.embedUrl=u; if(!u)return showToast('Masukkan link!','error'),showLoading(false); save(); }
         }
-
-        function loadPostsList() {
-            db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
-                const container = document.getElementById('postsList');
-                if (snapshot.empty) {
-                    container.innerHTML = '<p style="text-align:center;color:var(--gray);">Belum ada postingan.</p>';
-                    return;
-                }
-
-                let html = '';
-                snapshot.forEach(docSnap => {
-                    const data = docSnap.data();
-                    const date = data.createdAt ? new Date(data.createdAt.toDate()).toLocaleString('id-ID') : '-';
-                    const img = data.imageUrl || '';
-                    const typeLabel = data.type.charAt(0).toUpperCase() + data.type.slice(1);
-
-                    html += `
-                        <div class="data-card">
-                            ${img ? `<img src="${img}" alt="${data.title}">` : `<div style="width:80px;height:80px;background:rgba(212,175,55,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-${getIcon(data.type)}" style="color:var(--gold);font-size:1.5rem;"></i></div>`}
-                            <div class="info">
-                                <h4>${data.title}</h4>
-                                <p>${data.description || 'Tidak ada deskripsi'}</p>
-                                <p style="font-size:0.75rem;color:var(--gold);">${typeLabel} • ${date}</p>
-                            </div>
-                            <div class="actions">
-                                <button class="btn btn-edit btn-sm" onclick="editPost('${docSnap.id}')"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-danger btn-sm" onclick="deletePost('${docSnap.id}')"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </div>
-                    `;
+        function loadPostsList() { 
+            db.ref('posts').orderByChild('createdAt').on('value', snapshot => {
+                const c=document.getElementById('postsList');
+                const data = snapshot.val() || {};
+                if(Object.keys(data).length===0){c.innerHTML='<p style="text-align:center;color:var(--gray);">Belum ada postingan.</p>';return;}
+                const arr = Object.keys(data).map(key => ({ id: key, ...data[key] })).sort((a,b)=>b.createdAt-a.createdAt);
+                let h='';
+                arr.forEach(d=>{
+                    const dt = d.createdAt ? new Date(d.createdAt).toLocaleString('id-ID') : '-';
+                    const img=d.imageUrl||'';
+                    h+=`<div class="data-card">${img?`<img src="${img}">`:`<div style="width:70px;height:70px;background:rgba(212,175,55,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-image" style="color:var(--gold);"></i></div>`}<div class="info"><h4>${d.title}</h4><p>${d.description||'-'}</p><p style="font-size:0.75rem;color:var(--gold);">${d.type.toUpperCase()} • ${dt}</p></div><div class="actions"><button class="btn btn-edit btn-sm" onclick="editPost('${d.id}')"><i class="fas fa-edit"></i></button><button class="btn btn-danger btn-sm" onclick="deletePost('${d.id}')"><i class="fas fa-trash"></i></button></div></div>`;
                 });
-                container.innerHTML = html;
+                c.innerHTML=h;
             });
         }
+        function editPost(id) { db.ref('posts/' + id).once('value').then(s=>{if(!s.exists())return;const d=s.val();document.getElementById('editModalContent').innerHTML=`<button class="close-modal" onclick="closeModal()">&times;</button><h3>Edit Postingan</h3><div class="form-group"><label>Judul</label><input id="epT" value="${d.title}"></div><div class="form-group"><label>Deskripsi</label><textarea id="epD">${d.description||''}</textarea></div>${d.imageUrl?`<div class="form-group"><img src="${d.imageUrl}" style="max-width:100%;border-radius:8px;"><label style="margin-top:8px;">Ganti Foto (opsional)</label><input type="file" id="epF" accept="image/*"></div>`:''}<button class="btn btn-gold" onclick="saveEditPost('${id}')">Simpan</button>`;document.getElementById('editModal').classList.add('active');});}
+        function saveEditPost(id) { const t=document.getElementById('epT').value.trim(),des=document.getElementById('epD').value.trim();if(!t)return showToast('Judul wajib!','error');showLoading(true);const f=document.getElementById('epF')?.files[0];const u={title:t,description:des};if(f){compressToBase64(f,800,0.75).then(b64=>{u.imageUrl=b64;db.ref('posts/' + id).update(u).then(()=>{showToast('Update berhasil!','success');closeModal();}).catch(e=>showToast('Error: '+e.message,'error'))}).finally(()=>showLoading(false));}else{db.ref('posts/' + id).update(u).then(()=>{showToast('Update berhasil!','success');closeModal();}).catch(e=>showToast('Error: '+e.message,'error')).finally(()=>showLoading(false));}}
+        function deletePost(id) { if(confirm('Hapus?')) { showLoading(true); db.ref('posts/' + id).remove().then(()=>showToast('Dihapus!','success')).catch(e=>showToast('Error: '+e.message,'error')).finally(()=>showLoading(false)); } }
 
-        function getIcon(type) {
-            const icons = { youtube: 'play-circle', instagram: 'instagram', facebook: 'facebook', tiktok: 'music', photo: 'image', video: 'video' };
-            return icons[type] || 'image';
-        }
-
-        function editPost(id) {
-            db.collection('posts').doc(id).get().then(doc => {
-                if (!doc.exists) return;
-                const data = doc.data();
-                const modal = document.getElementById('editModalContent');
-                modal.innerHTML = `
-                    <button class="close-modal" onclick="closeModal()">&times;</button>
-                    <h3><i class="fas fa-edit"></i> Edit Postingan</h3>
-                    <div class="form-group">
-                        <label>Judul</label>
-                        <input type="text" id="editPostTitle" value="${data.title}">
-                    </div>
-                    <div class="form-group">
-                        <label>Deskripsi</label>
-                        <textarea id="editPostDesc">${data.description || ''}</textarea>
-                    </div>
-                    ${data.imageUrl ? `<div class="form-group"><img src="${data.imageUrl}" style="max-width:100%;border-radius:10px;"><br><label style="margin-top:10px;">Ganti Foto (opsional)</label><input type="file" id="editPostFile" accept="image/*"></div>` : ''}
-                    <button class="btn btn-gold" onclick="saveEditPost('${id}')"><i class="fas fa-save"></i> Simpan</button>
-                `;
-                document.getElementById('editModal').classList.add('active');
-            });
-        }
-
-        function saveEditPost(id) {
-            const title = document.getElementById('editPostTitle').value.trim();
-            const desc = document.getElementById('editPostDesc').value.trim();
-
-            if (!title) {
-                showToast('Judul tidak boleh kosong!', 'error');
-                return;
-            }
-
-            const fileInput = document.getElementById('editPostFile');
-
-            if (fileInput && fileInput.files[0]) {
-                showLoading(true);
-                uploadToStorage(fileInput.files[0], `posts/${Date.now()}_${fileInput.files[0].name}`).then(url => {
-                    db.collection('posts').doc(id).update({
-                        title: title,
-                        description: desc,
-                        imageUrl: url
-                    }).then(() => {
-                        showToast('Postingan berhasil diupdate!', 'success');
-                        closeModal();
-                    }).finally(() => showLoading(false));
-                }).catch(err => {
-                    showToast('Upload error: ' + err.message, 'error');
-                    showLoading(false);
-                });
-            } else {
-                showLoading(true);
-                db.collection('posts').doc(id).update({
-                    title: title,
-                    description: desc
-                }).then(() => {
-                    showToast('Postingan berhasil diupdate!', 'success');
-                    closeModal();
-                }).catch(err => {
-                    showToast('Error: ' + err.message, 'error');
-                }).finally(() => showLoading(false));
-            }
-        }
-
-        function deletePost(id) {
-            if (confirm('Yakin ingin menghapus postingan ini?')) {
-                showLoading(true);
-                db.collection('posts').doc(id).delete().then(() => {
-                    showToast('Postingan berhasil dihapus!', 'success');
-                }).catch(err => {
-                    showToast('Error: ' + err.message, 'error');
-                }).finally(() => showLoading(false));
-            }
-        }
-
-        // ===== SOCIALS =====
-        function saveSocials() {
-            showLoading(true);
-            db.collection('settings').doc('socials').set({
-                whatsapp: document.getElementById('socialWA').value.trim(),
-                instagram: document.getElementById('socialIG').value.trim(),
-                facebook: document.getElementById('socialFB').value.trim(),
-                tiktok: document.getElementById('socialTT').value.trim(),
-                youtube: document.getElementById('socialYT').value.trim()
-            }).then(() => {
-                showToast('Media sosial berhasil disimpan!', 'success');
-            }).catch(err => {
-                showToast('Error: ' + err.message, 'error');
-            }).finally(() => showLoading(false));
-        }
-
-        function loadSocials() {
-            db.collection('settings').doc('socials').onSnapshot(doc => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    document.getElementById('socialWA').value = data.whatsapp || '';
-                    document.getElementById('socialIG').value = data.instagram || '';
-                    document.getElementById('socialFB').value = data.facebook || '';
-                    document.getElementById('socialTT').value = data.tiktok || '';
-                    document.getElementById('socialYT').value = data.youtube || '';
-                }
-            });
-        }
-
-        // ===== PROFILE =====
-        function uploadProfile() {
-            const fileInput = document.getElementById('profileInput');
-            if (!fileInput.files[0]) {
-                showToast('Pilih foto terlebih dahulu!', 'error');
-                return;
-            }
-
-            showLoading(true);
-            uploadToStorage(fileInput.files[0], `profile/${Date.now()}_profile.jpg`).then(url => {
-                db.collection('settings').doc('profile').set({
-                    imageUrl: url
-                }).then(() => {
-                    showToast('Foto profil berhasil diupload!', 'success');
-                    document.getElementById('currentProfileImg').src = url;
-                    document.getElementById('currentProfileImg').style.display = 'block';
-                    fileInput.value = '';
-                    document.getElementById('profilePreview').style.display = 'none';
-                });
-            }).catch(err => {
-                showToast('Upload error: ' + err.message, 'error');
-            }).finally(() => showLoading(false));
-        }
-
-        function loadProfile() {
-            db.collection('settings').doc('profile').onSnapshot(doc => {
-                if (doc.exists && doc.data().imageUrl) {
-                    document.getElementById('currentProfileImg').src = doc.data().imageUrl;
-                    document.getElementById('currentProfileImg').style.display = 'block';
-                }
-            });
-        }
-
-        // ===== BACKGROUND =====
-        function uploadBackground() {
-            const fileInput = document.getElementById('bgInput');
-            if (!fileInput.files[0]) {
-                showToast('Pilih gambar terlebih dahulu!', 'error');
-                return;
-            }
-
-            showLoading(true);
-            uploadToStorage(fileInput.files[0], `background/${Date.now()}_bg.jpg`).then(url => {
-                db.collection('settings').doc('background').set({
-                    imageUrl: url
-                }).then(() => {
-                    showToast('Background berhasil diupload!', 'success');
-                    document.getElementById('currentBgImg').src = url;
-                    document.getElementById('currentBgImg').style.display = 'block';
-                    fileInput.value = '';
-                    document.getElementById('bgPreview').style.display = 'none';
-                });
-            }).catch(err => {
-                showToast('Upload error: ' + err.message, 'error');
-            }).finally(() => showLoading(false));
-        }
-
-        function loadBackground() {
-            db.collection('settings').doc('background').onSnapshot(doc => {
-                if (doc.exists && doc.data().imageUrl) {
-                    document.getElementById('currentBgImg').src = doc.data().imageUrl;
-                    document.getElementById('currentBgImg').style.display = 'block';
-                }
-            });
-        }
-
-        function removeBackground() {
-            if (confirm('Yakin ingin menghapus background?')) {
-                showLoading(true);
-                db.collection('settings').doc('background').delete().then(() => {
-                    showToast('Background berhasil dihapus!', 'success');
-                    document.getElementById('currentBgImg').style.display = 'none';
-                }).catch(err => {
-                    showToast('Error: ' + err.message, 'error');
-                }).finally(() => showLoading(false));
-            }
-        }
-
-        // ===== CHANGE PASSWORD =====
-        function changePassword() {
-            const current = document.getElementById('currentPass').value;
-            const newPass = document.getElementById('newPass').value;
-            const confirm = document.getElementById('confirmPass').value;
-
-            if (current !== getStoredPassword()) {
-                showToast('Password saat ini salah!', 'error');
-                return;
-            }
-            if (newPass.length < 4) {
-                showToast('Password minimal 4 karakter!', 'error');
-                return;
-            }
-            if (newPass !== confirm) {
-                showToast('Konfirmasi password tidak cocok!', 'error');
-                return;
-            }
-
-            setStoredPassword(newPass);
-            showToast('Password berhasil diubah!', 'success');
-            document.getElementById('currentPass').value = '';
-            document.getElementById('newPass').value = '';
-            document.getElementById('confirmPass').value = '';
-        }
-
-        // ===== CLOSE MODAL =====
-        function closeModal() {
-            document.getElementById('editModal').classList.remove('active');
-        }
-
-        document.getElementById('editModal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-
-        // ===== LOAD ALL ADMIN DATA =====
-        function loadAdminData() {
-            loadPricesTable();
-            loadPostsList();
-            loadSocials();
-            loadProfile();
-            loadBackground();
-        }
+        // SETTINGS & ASSETS (RTDB)
+        function saveSocials() { showLoading(true); db.ref('settings/socials').set({whatsapp:document.getElementById('socialWA').value.trim(),instagram:document.getElementById('socialIG').value.trim(),facebook:document.getElementById('socialFB').value.trim(),tiktok:document.getElementById('socialTT').value.trim(),youtube:document.getElementById('socialYT').value.trim()}).then(()=>showToast('Disimpan!','success')).catch(e=>showToast('Error: '+e.message,'error')).finally(()=>showLoading(false));}
+        function loadSocials() { db.ref('settings/socials').on('value', s=>{if(s.exists()){const d=s.val();document.getElementById('socialWA').value=d.whatsapp||'';document.getElementById('socialIG').value=d.instagram||'';document.getElementById('socialFB').value=d.facebook||'';document.getElementById('socialTT').value=d.tiktok||'';document.getElementById('socialYT').value=d.youtube||'';}});}
+        function uploadProfile() { const f=document.getElementById('profileInput').files[0]; if(!f) return showToast('Pilih foto!','error'); showLoading(true); compressToBase64(f,400,0.8).then(b64=>db.ref('settings/profile').set({imageUrl:b64}).then(()=>{showToast('Profil berhasil!','success');document.getElementById('profileInput').value='';document.getElementById('profilePreview').style.display='none';}).catch(e=>showToast('Error: '+e.message,'error'))).finally(()=>showLoading(false));}
+        function uploadBackground() { const f=document.getElementById('bgInput').files[0]; if(!f) return showToast('Pilih gambar!','error'); showLoading(true); compressToBase64(f,1200,0.8).then(b64=>db.ref('settings/background').set({imageUrl:b64}).then(()=>{showToast('BG berhasil!','success');document.getElementById('bgInput').value='';document.getElementById('bgPreview').style.display='none';}).catch(e=>showToast('Error: '+e.message,'error'))).finally(()=>showLoading(false));}
+        function removeBackground() { if(confirm('Hapus background?')) { showLoading(true); db.ref('settings/background').remove().then(()=>{showToast('Dihapus!','success');}).catch(e=>showToast('Error: '+e.message,'error')).finally(()=>showLoading(false)); } }
+        function changePassword() { const o=document.getElementById('oldPass').value,n=document.getElementById('newPass').value; if(o!==getPass()) return showToast('Password lama salah!','error'); if(n.length<4) return showToast('Min 4 karakter!','error'); setPass(n); showToast('Password diubah!','success'); document.getElementById('oldPass').value='';document.getElementById('newPass').value='';}
+        function loadAdminData() { loadPricesTable(); loadPostsList(); loadSocials(); }
     </script>
 </body>
 </html>
