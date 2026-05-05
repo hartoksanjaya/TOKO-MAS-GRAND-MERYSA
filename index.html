@@ -2,161 +2,484 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toko Mas Grand Merysa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- 📱 PWA -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#D4AF37">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Toko Mas Grand Merysa - Premium Gold Jewelry Pekanbaru</title>
+    <meta name="description" content="Toko Emas Grand Merysa Pekanbaru - Jual beli emas berkualitas dengan harga terbaik. Kunjungi kami di Pasar Karya Sejahtera, Kilo 6 Garuda Sakti.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root{--gold:#D4AF37;--gold-light:#F5E6A3;--gold-dark:#B8960C;--black:#0A0A0A;--dark:#1A1A2E;--dark2:#16213E;--dark3:#0F3460;--white:#FFFFFF;--gray:#E0E0E0;--gradient-gold:linear-gradient(135deg,#D4AF37,#F5E6A3,#D4AF37);--gradient-dark:linear-gradient(135deg,#0A0A0A,#1A1A2E,#16213E);--gradient-premium:linear-gradient(135deg,#D4AF37 0%,#B8960C 50%,#D4AF37 100%)}
-        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Poppins',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden}
-        ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--dark)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px}
-        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);border-bottom:2px solid var(--gold);padding:0 20px;height:70px;display:flex;align-items:center;justify-content:space-between;transition:0.3s}
-        .navbar.scrolled{height:60px;box-shadow:0 5px 30px rgba(212,175,55,0.3)}
-        .nav-left{display:flex;align-items:center;gap:15px}
-        .hamburger{cursor:pointer;width:35px;height:30px;display:flex;flex-direction:column;justify-content:space-between;z-index:1001}
-        .hamburger span{display:block;height:3px;background:var(--gold);border-radius:3px;transition:0.3s}
-        .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(8px,8px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(8px,-8px)}
-        .nav-brand{display:flex;align-items:center;gap:12px}
-        .nav-profile-img{width:45px;height:45px;border-radius:50%;border:2px solid var(--gold);object-fit:cover;transition:0.3s}
-        .nav-profile-img:hover{box-shadow:0 0 20px rgba(212,175,55,0.5);transform:scale(1.1)}
-        .nav-shop-name{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;background:var(--gradient-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-        .nav-right{display:flex;align-items:center;gap:15px}
-        .nav-socials a{color:var(--gold);font-size:1.2rem;margin-left:10px;transition:0.3s}.nav-socials a:hover{color:var(--white);transform:translateY(-3px)}
-        .music-btn{background:var(--gradient-premium);border:none;color:var(--black);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:0.3s;animation:pulse 2s infinite}.music-btn:hover{transform:scale(1.15);box-shadow:0 0 25px rgba(212,175,55,0.6)}
-        @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(212,175,55,0.4)}50%{box-shadow:0 0 0 15px rgba(212,175,55,0)}}
-        .sidebar{position:fixed;top:0;left:-320px;width:300px;height:100vh;background:linear-gradient(180deg,#0A0A0A,#1A1A2E,#0A0A0A);border-right:2px solid var(--gold);z-index:999;transition:0.4s cubic-bezier(0.4,0,0.2,1);padding-top:80px;overflow-y:auto}
-        .sidebar.active{left:0}
-        .sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:998;opacity:0;visibility:hidden;transition:0.3s}.sidebar-overlay.active{opacity:1;visibility:visible}
-        .sidebar-menu{list-style:none;padding:20px 0}.sidebar-menu li{margin:5px 0}
-        .sidebar-menu a{display:flex;align-items:center;gap:15px;padding:15px 30px;color:var(--white);text-decoration:none;font-weight:500;transition:0.3s;border-left:3px solid transparent}
-        .sidebar-menu a:hover,.sidebar-menu a.active{background:rgba(212,175,55,0.1);color:var(--gold);border-left-color:var(--gold)}
-        .sidebar-menu a i{width:25px;font-size:1.1rem}
-        .sidebar-profile{text-align:center;padding:20px;border-bottom:1px solid rgba(212,175,55,0.2);margin-bottom:10px}
-        .sidebar-profile img{width:80px;height:80px;border-radius:50%;border:3px solid var(--gold);margin-bottom:10px}
-        .sidebar-profile h3{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.1rem}
-        .sidebar-profile p{font-size:0.8rem;color:var(--gray)}
-        .hero{margin-top:70px;min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
-        .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(0.3);transition:0.5s}
-        .hero-particles{position:absolute;inset:0;overflow:hidden}
-        .particle{position:absolute;width:4px;height:4px;background:var(--gold);border-radius:50%;animation:float-particle linear infinite;opacity:0.6}
-        @keyframes float-particle{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:0.6}90%{opacity:0.6}100%{transform:translateY(-100vh) rotate(720deg);opacity:0}}
-        .hero-content{position:relative;z-index:2;text-align:center;padding:40px 20px;max-width:900px}
-        .hero-badge{display:inline-block;padding:8px 25px;border:1px solid var(--gold);border-radius:50px;font-size:0.85rem;color:var(--gold);margin-bottom:20px;letter-spacing:3px;text-transform:uppercase;animation:fadeInDown 1s ease}
-        .hero-title{font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;background:var(--gradient-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:10px;animation:fadeInUp 1s ease 0.2s both}
-        .hero-script{font-family:'Great Vibes',cursive;font-size:2.5rem;color:var(--gold-light);margin-bottom:20px;animation:fadeInUp 1s ease 0.4s both}
-        .hero-desc{font-size:1.1rem;color:var(--gray);max-width:600px;margin:0 auto 15px;line-height:1.8;animation:fadeInUp 1s ease 0.6s both}
-        .hero-address{display:inline-flex;align-items:center;gap:10px;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.3);padding:12px 25px;border-radius:50px;color:var(--gold-light);font-size:0.95rem;margin-bottom:30px;animation:fadeInUp 1s ease 0.8s both}
-        .hero-address i{color:var(--gold)}
-        .hero-buttons{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;animation:fadeInUp 1s ease 1s both}
-        .btn-gold{padding:14px 35px;background:var(--gradient-premium);color:var(--black);border:none;border-radius:50px;font-weight:600;font-size:1rem;cursor:pointer;transition:0.3s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-        .btn-gold:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(212,175,55,0.4)}
-        .btn-outline{padding:14px 35px;background:transparent;color:var(--gold);border:2px solid var(--gold);border-radius:50px;font-weight:600;font-size:1rem;cursor:pointer;transition:0.3s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-        .btn-outline:hover{background:var(--gold);color:var(--black);transform:translateY(-3px)}
-        @keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes fadeInDown{from{opacity:0;transform:translateY(-40px)}to{opacity:1;transform:translateY(0)}}
-        .price-ticker{background:linear-gradient(90deg,var(--dark),var(--dark2),var(--dark));border-top:1px solid rgba(212,175,55,0.3);border-bottom:1px solid rgba(212,175,55,0.3);padding:15px 0;overflow:hidden;position:relative}
-        .ticker-wrap{display:flex;animation:ticker 20s linear infinite;width:max-content}
-        .ticker-item{display:inline-flex;align-items:center;gap:10px;padding:0 40px;white-space:nowrap}
-        .ticker-item .label{color:var(--gray);font-size:0.85rem}
-        .ticker-item .price{color:var(--gold);font-weight:700;font-size:1.1rem;font-family:'Playfair Display',serif}
-        .ticker-item .change{font-size:0.8rem;padding:3px 10px;border-radius:20px}
-        .ticker-item .change.up{background:rgba(0,200,83,0.2);color:#00C853}
-        .ticker-item .change.down{background:rgba(255,82,82,0.2);color:#FF5252}
-        @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-        .section{padding:80px 20px;max-width:1200px;margin:0 auto}
-        .section-header{text-align:center;margin-bottom:50px}
-        .section-header h2{font-family:'Playfair Display',serif;font-size:2.5rem;background:var(--gradient-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
-        .section-header p{color:var(--gray);font-size:1rem}
-        .section-divider{width:80px;height:3px;background:var(--gradient-gold);margin:15px auto;border-radius:3px}
-        .price-section{background:linear-gradient(180deg,var(--black),var(--dark),var(--black))}
-        .price-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;max-width:1200px;margin:0 auto;padding:0 20px}
-        .price-card{background:linear-gradient(135deg,rgba(26,26,46,0.8),rgba(22,33,62,0.8));border:1px solid rgba(212,175,55,0.2);border-radius:20px;padding:30px;text-align:center;transition:0.4s;position:relative;overflow:hidden}
-        .price-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(212,175,55,0.1) 0%,transparent 70%);opacity:0;transition:0.4s}
-        .price-card:hover::before{opacity:1}
-        .price-card:hover{transform:translateY(-10px);border-color:var(--gold);box-shadow:0 20px 40px rgba(212,175,55,0.15)}
-        .price-card .karat{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--gold);margin-bottom:5px}
-        .price-card .type{color:var(--gray);font-size:0.9rem;margin-bottom:15px}
-        .price-card .amount{font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:5px}
-        .price-card .unit{color:var(--gold-light);font-size:0.85rem}
-        .price-card .updated{margin-top:15px;font-size:0.75rem;color:var(--gray);opacity:0.7}
-        .posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:25px}
-        .post-card{background:linear-gradient(135deg,rgba(26,26,46,0.9),rgba(22,33,62,0.9));border:1px solid rgba(212,175,55,0.15);border-radius:20px;overflow:hidden;transition:0.4s}
-        .post-card:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(0,0,0,0.3);border-color:var(--gold)}
-        .post-media{width:100%;min-height:250px;background:var(--dark);position:relative;overflow:hidden}
-        .post-media img{width:100%;height:300px;object-fit:cover;transition:0.4s}.post-card:hover .post-media img{transform:scale(1.05)}
-        .post-media iframe{width:100%;height:300px;border:none}
-        .post-content{padding:20px}.post-content h3{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.2rem;margin-bottom:8px}.post-content p{color:var(--gray);font-size:0.9rem;line-height:1.6}
-        .post-meta{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;border-top:1px solid rgba(212,175,55,0.1)}
-        .post-date{color:var(--gray);font-size:0.8rem}
-        .post-source{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:600}
-        .post-source.youtube{background:rgba(255,0,0,0.2);color:#FF0000}.post-source.instagram{background:rgba(225,48,108,0.2);color:#E1306C}.post-source.facebook{background:rgba(24,119,242,0.2);color:#1877F2}.post-source.tiktok{background:rgba(255,255,255,0.1);color:#fff}.post-source.photo{background:rgba(212,175,55,0.2);color:var(--gold)}
-        .social-section{background:linear-gradient(180deg,var(--dark),var(--black));padding:80px 20px;text-align:center}
-        .social-icons{display:flex;justify-content:center;gap:25px;flex-wrap:wrap;margin-top:30px}
-        .social-icon{width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:var(--white);text-decoration:none;transition:0.4s;position:relative;overflow:hidden}
-        .social-icon:hover{transform:translateY(-8px) scale(1.1);box-shadow:0 15px 30px rgba(0,0,0,0.3)}
-        .social-icon.whatsapp{background:linear-gradient(135deg,#25D366,#128C7E)}.social-icon.instagram{background:linear-gradient(135deg,#833AB4,#E1306C,#F77737)}.social-icon.facebook{background:linear-gradient(135deg,#1877F2,#0D5BBF)}.social-icon.tiktok{background:linear-gradient(135deg,#000,#333)}.social-icon.youtube{background:linear-gradient(135deg,#FF0000,#CC0000)}
-        .footer{background:linear-gradient(180deg,var(--black),#050505);border-top:2px solid rgba(212,175,55,0.3);padding:50px 20px 20px}
-        .footer-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:40px;margin-bottom:30px}
-        .footer-col h3{font-family:'Playfair Display',serif;color:var(--gold);margin-bottom:15px;font-size:1.2rem}
-        .footer-col p,.footer-col a{color:var(--gray);font-size:0.9rem;line-height:2;text-decoration:none;display:block;transition:0.3s}
-        .footer-col a:hover{color:var(--gold);padding-left:5px}
-        .footer-bottom{text-align:center;padding-top:20px;border-top:1px solid rgba(212,175,55,0.1);color:var(--gray);font-size:0.85rem}
-        .music-player{position:fixed;bottom:20px;right:20px;z-index:900;display:flex;align-items:center;gap:10px;background:rgba(10,10,10,0.9);backdrop-filter:blur(10px);border:1px solid var(--gold);border-radius:50px;padding:10px 20px;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
-        .music-player .music-label{color:var(--gold);font-size:0.8rem;font-weight:600}
-        .music-player .music-bars{display:flex;gap:3px;align-items:flex-end;height:20px}
-        .music-player .bar{width:3px;background:var(--gold);border-radius:2px;animation:musicBar 0.8s ease-in-out infinite alternate}
-        .music-player .bar:nth-child(1){height:8px;animation-delay:0s}.music-player .bar:nth-child(2){height:15px;animation-delay:0.2s}.music-player .bar:nth-child(3){height:10px;animation-delay:0.4s}.music-player .bar:nth-child(4){height:18px;animation-delay:0.1s}
-        .music-player.playing .bar{animation-play-state:running}.music-player:not(.playing) .bar{animation-play-state:paused;height:3px!important}
-        @keyframes musicBar{0%{height:5px}100%{height:20px}}
-        .music-toggle{background:var(--gradient-premium);border:none;color:var(--black);width:35px;height:35px;border-radius:50%;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:0.3s}.music-toggle:hover{transform:scale(1.1)}
-        .scroll-top{position:fixed;bottom:80px;right:25px;z-index:900;width:45px;height:45px;background:var(--gradient-premium);color:var(--black);border:none;border-radius:50%;cursor:pointer;font-size:1.2rem;display:none;align-items:center;justify-content:center;transition:0.3s;box-shadow:0 5px 15px rgba(212,175,55,0.3)}.scroll-top:hover{transform:translateY(-3px)}.scroll-top.visible{display:flex}
-        .loading-screen{position:fixed;inset:0;background:var(--black);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.5s}
-        .loading-screen.hidden{opacity:0;pointer-events:none}
-        .loading-logo{font-family:'Playfair Display',serif;font-size:2.5rem;background:var(--gradient-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px}
-        .loading-bar{width:200px;height:3px;background:rgba(212,175,55,0.2);border-radius:3px;overflow:hidden}
-        .loading-bar::after{content:'';display:block;width:50%;height:100%;background:var(--gold);border-radius:3px;animation:loading 1s ease-in-out infinite}
-        @keyframes loading{0%{transform:translateX(-100%)}100%{transform:translateX(300%)}}
-        .about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:25px;margin-top:30px}
-        .about-card{text-align:center;padding:30px 20px;background:rgba(26,26,46,0.5);border:1px solid rgba(212,175,55,0.1);border-radius:15px;transition:0.3s}.about-card:hover{border-color:var(--gold);transform:translateY(-5px)}
-        .about-card i{font-size:2.5rem;color:var(--gold);margin-bottom:15px}.about-card h4{color:var(--white);margin-bottom:8px}.about-card p{color:var(--gray);font-size:0.85rem}
-        .embed-container{position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden}.embed-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
-        .toast{position:fixed;top:80px;right:20px;background:rgba(26,26,46,0.95);border:1px solid var(--gold);color:var(--white);padding:15px 25px;border-radius:10px;z-index:9999;transform:translateX(400px);transition:0.4s;font-size:0.9rem}.toast.show{transform:translateX(0)}
-        @media(max-width:768px){.hero-title{font-size:2.5rem}.hero-script{font-size:1.8rem}.nav-shop-name{font-size:1rem}.nav-socials{display:none}.posts-grid{grid-template-columns:1fr}.section-header h2{font-size:1.8rem}.price-cards{grid-template-columns:repeat(2,1fr)}.hero-buttons{flex-direction:column;align-items:center}}
-        @media(max-width:480px){.price-cards{grid-template-columns:1fr}.hero-title{font-size:2rem}}
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-hover: #1a1a25;
+            --gold: #d4af37;
+            --gold-light: #f4e4a7;
+            --gold-gradient: linear-gradient(135deg, #d4af37, #f4e4a7, #b89628);
+            --text: #f5f5f5;
+            --text-muted: #a0a0b0;
+            --border: rgba(212, 175, 55, 0.15);
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            --shadow-gold: 0 5px 25px rgba(212, 175, 55, 0.2);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed; inset: 0; background: var(--bg-dark);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 9999; transition: opacity 0.4s, visibility 0.4s;
+        }
+        .loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loading-logo {
+            font-size: 1.8rem; font-weight: 700; color: var(--gold);
+            background: var(--gold-gradient); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; margin-bottom: 25px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        .loading-bar {
+            width: 200px; height: 4px; background: rgba(212,175,55,0.2);
+            border-radius: 2px; overflow: hidden; position: relative;
+        }
+        .loading-bar::after {
+            content: ''; position: absolute; left: -100%; width: 100%; height: 100%;
+            background: var(--gold-gradient); animation: load 1.2s infinite;
+        }
+        @keyframes load { to { left: 100%; } }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed; top: 20px; right: 20px; left: 20px; max-width: 400px;
+            margin: 0 auto; background: var(--bg-card); border-left: 4px solid var(--gold);
+            padding: 14px 20px; border-radius: 12px; box-shadow: var(--shadow);
+            transform: translateY(-150px); transition: transform 0.3s; z-index: 10000;
+            font-size: 0.9rem; display: flex; align-items: center; gap: 10px;
+        }
+        .toast.show { transform: translateY(0); }
+        .toast.success { border-color: #2ed573; }
+        .toast.error { border-color: #ff4757; }
+        .toast i { font-size: 1.1rem; }
+
+        /* Navbar */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(10, 10, 15, 0.9); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border); transition: var(--transition);
+        }
+        .navbar.scrolled { padding: 8px 20px; background: rgba(10, 10, 15, 0.98); }
+        .nav-left { display: flex; align-items: center; gap: 12px; }
+        .hamburger {
+            width: 28px; height: 22px; display: flex; flex-direction: column;
+            justify-content: space-between; cursor: pointer; padding: 3px;
+        }
+        .hamburger span {
+            display: block; height: 3px; background: var(--gold); border-radius: 2px;
+            transition: var(--transition);
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .nav-brand { display: flex; align-items: center; gap: 10px; }
+        .nav-profile-img {
+            width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--gold);
+            object-fit: cover; background: var(--bg-card);
+        }
+        .nav-shop-name { font-weight: 600; font-size: 1.1rem; color: var(--gold); }
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+        .nav-socials { display: flex; gap: 12px; }
+        .nav-socials a {
+            color: var(--text-muted); font-size: 1.1rem; transition: var(--transition);
+            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; background: rgba(212,175,55,0.1);
+        }
+        .nav-socials a:hover { color: var(--gold); background: rgba(212,175,55,0.2); transform: translateY(-2px); }
+        .music-btn {
+            width: 36px; height: 36px; border-radius: 50%; border: none;
+            background: rgba(212,175,55,0.15); color: var(--gold); cursor: pointer;
+            transition: var(--transition); display: flex; align-items: center; justify-content: center;
+        }
+        .music-btn:hover { background: var(--gold); color: #000; transform: scale(1.1); }
+
+        /* Sidebar */
+        .sidebar-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1001;
+            opacity: 0; visibility: hidden; transition: var(--transition);
+        }
+        .sidebar-overlay.active { opacity: 1; visibility: visible; }
+        .sidebar {
+            position: fixed; top: 0; left: -300px; width: 280px; height: 100vh;
+            background: var(--bg-card); border-right: 1px solid var(--border);
+            padding: 20px; z-index: 1002; transition: var(--transition);
+            display: flex; flex-direction: column;
+        }
+        .sidebar.active { left: 0; }
+        .sidebar-profile {
+            text-align: center; padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 20px;
+        }
+        .sidebar-profile img {
+            width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--gold);
+            object-fit: cover; margin-bottom: 12px;
+        }
+        .sidebar-profile h3 { color: var(--gold); font-size: 1.1rem; margin-bottom: 4px; }
+        .sidebar-profile p { color: var(--text-muted); font-size: 0.85rem; }
+        .sidebar-menu { list-style: none; flex: 1; }
+        .sidebar-menu li { margin-bottom: 5px; }
+        .sidebar-menu a {
+            display: flex; align-items: center; gap: 12px; padding: 14px 16px;
+            color: var(--text); text-decoration: none; border-radius: 10px;
+            transition: var(--transition); font-weight: 500;
+        }
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: rgba(212,175,55,0.15); color: var(--gold);
+        }
+        .sidebar-menu i { width: 20px; text-align: center; }
+
+        /* Hero Section */
+        .hero {
+            position: relative; min-height: 100vh; display: flex; align-items: center;
+            justify-content: center; padding: 100px 20px 80px; overflow: hidden;
+            text-align: center;
+        }
+        .hero-bg {
+            position: absolute; inset: 0; background-size: cover; background-position: center;
+            background-repeat: no-repeat; filter: brightness(0.4); z-index: 1;
+            transition: background-image 0.5s ease;
+        }
+        .hero-bg::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(10,10,15,0.3) 0%, var(--bg-dark) 100%);
+        }
+        .hero-particles { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+        .particle {
+            position: absolute; background: var(--gold); border-radius: 50%;
+            animation: float 8s infinite ease-in-out; opacity: 0.6;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+        }
+        .hero-content { position: relative; z-index: 3; max-width: 700px; animation: fadeInUp 0.8s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .hero-badge {
+            display: inline-block; padding: 6px 16px; background: rgba(212,175,55,0.15);
+            border: 1px solid var(--gold); border-radius: 20px; color: var(--gold);
+            font-size: 0.85rem; font-weight: 500; margin-bottom: 20px;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+        .hero-title {
+            font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 800; line-height: 1.1;
+            margin-bottom: 15px; background: var(--gold-gradient); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-script {
+            font-family: 'Great Vibes', cursive; font-size: clamp(1.5rem, 5vw, 2.5rem);
+            color: var(--gold-light); margin-bottom: 20px; font-weight: 400;
+        }
+        .hero-desc {
+            color: var(--text-muted); font-size: 1.05rem; margin-bottom: 25px;
+            max-width: 550px; margin-left: auto; margin-right: auto;
+        }
+        .hero-address {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px;
+        }
+        .hero-address i { color: var(--gold); }
+        .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .btn-gold, .btn-outline {
+            padding: 14px 28px; border-radius: 12px; font-weight: 600; font-size: 0.95rem;
+            text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+            transition: var(--transition); cursor: pointer; border: none;
+        }
+        .btn-gold {
+            background: var(--gold-gradient); color: #000;
+            box-shadow: var(--shadow-gold);
+        }
+        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 8px 35px rgba(212,175,55,0.35); }
+        .btn-outline {
+            background: transparent; border: 2px solid var(--gold); color: var(--gold);
+        }
+        .btn-outline:hover { background: var(--gold); color: #000; transform: translateY(-3px); }
+
+        /* Price Ticker */
+        .price-ticker {
+            position: sticky; top: 60px; z-index: 99; background: var(--bg-card);
+            border-bottom: 1px solid var(--border); overflow: hidden;
+        }
+        .ticker-wrap { display: flex; animation: ticker 30s linear infinite; width: max-content; }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .ticker-item {
+            padding: 10px 25px; display: flex; align-items: center; gap: 10px;
+            white-space: nowrap; border-right: 1px solid var(--border);
+        }
+        .ticker-item .label { color: var(--text-muted); font-size: 0.85rem; }
+        .ticker-item .price { color: var(--gold); font-weight: 600; }
+
+        /* Section Styles */
+        .section { padding: 70px 20px; }
+        .section-header { text-align: center; max-width: 600px; margin: 0 auto 45px; }
+        .section-header h2 {
+            font-size: clamp(1.5rem, 5vw, 2rem); color: var(--gold); margin-bottom: 12px;
+        }
+        .section-divider {
+            width: 60px; height: 3px; background: var(--gold-gradient);
+            margin: 0 auto 15px; border-radius: 2px;
+        }
+        .section-header p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Price Cards */
+        .price-cards {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px; max-width: 1200px; margin: 0 auto;
+        }
+        .price-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+            padding: 22px; text-align: center; transition: var(--transition);
+            position: relative; overflow: hidden;
+        }
+        .price-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--gold-gradient);
+        }
+        .price-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: var(--shadow-gold); }
+        .price-card .karat {
+            font-size: 2rem; font-weight: 800; color: var(--gold); margin-bottom: 8px;
+        }
+        .price-card .type { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px; }
+        .price-card .amount {
+            font-size: 1.5rem; font-weight: 700; color: var(--text); margin-bottom: 5px;
+        }
+        .price-card .unit { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 12px; }
+        .price-card .updated {
+            font-size: 0.8rem; color: var(--text-muted); display: flex;
+            align-items: center; justify-content: center; gap: 5px;
+        }
+
+        /* Posts Grid */
+        .posts-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 22px; max-width: 1200px; margin: 0 auto;
+        }
+        .post-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+            overflow: hidden; transition: var(--transition);
+        }
+        .post-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: var(--shadow-gold); }
+        .post-media {
+            position: relative; width: 100%; padding-top: 75%; background: #000;
+            overflow: hidden;
+        }
+        .post-media img, .post-media video {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            object-fit: cover; transition: transform 0.5s;
+        }
+        .post-card:hover .post-media img, .post-card:hover .post-media video { transform: scale(1.05); }
+        .post-media .embed-container {
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            background: #000;
+        }
+        .post-media iframe { width: 100%; height: 100%; border: none; }
+        .post-content { padding: 18px; }
+        .post-content h3 {
+            font-size: 1.1rem; color: var(--gold); margin-bottom: 8px; line-height: 1.4;
+        }
+        .post-content p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
+        .post-meta {
+            padding: 12px 18px 18px; display: flex; justify-content: space-between;
+            align-items: center; font-size: 0.8rem; color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+        .post-source {
+            display: flex; align-items: center; gap: 5px; padding: 4px 10px;
+            background: rgba(212,175,55,0.1); border-radius: 20px; color: var(--gold);
+            font-weight: 500; font-size: 0.75rem;
+        }
+        .post-source.video { background: rgba(255,82,82,0.15); color: #ff5252; }
+        .post-source.youtube { background: rgba(255,0,0,0.15); color: #ff0000; }
+        .post-source.tiktok { background: rgba(0,0,0,0.3); color: #fff; }
+        .post-source.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
+
+        /* Social Section */
+        .social-section {
+            background: var(--bg-card); border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border); padding: 50px 20px; text-align: center;
+        }
+        .social-icons {
+            display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 25px;
+        }
+        .social-icon {
+            width: 55px; height: 55px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 1.4rem;
+            color: #fff; text-decoration: none; transition: var(--transition);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        .social-icon:hover { transform: translateY(-5px) scale(1.1); }
+        .social-icon.whatsapp { background: #25D366; }
+        .social-icon.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .social-icon.facebook { background: #1877F2; }
+        .social-icon.tiktok { background: #000; }
+        .social-icon.youtube { background: #FF0000; }
+
+        /* About Grid */
+        .about-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px; max-width: 1000px; margin: 0 auto;
+        }
+        .about-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+            padding: 25px 20px; text-align: center; transition: var(--transition);
+        }
+        .about-card:hover { transform: translateY(-5px); border-color: var(--gold); }
+        .about-card i {
+            font-size: 2rem; color: var(--gold); margin-bottom: 15px;
+            display: block;
+        }
+        .about-card h4 { color: var(--gold); margin-bottom: 10px; font-size: 1.1rem; }
+        .about-card p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-card); border-top: 1px solid var(--border);
+            padding: 50px 20px 20px; margin-top: 40px;
+        }
+        .footer-content {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px; max-width: 1200px; margin: 0 auto 30px;
+        }
+        .footer-col h3 { color: var(--gold); margin-bottom: 15px; font-size: 1.1rem; }
+        .footer-col p, .footer-col a {
+            color: var(--text-muted); font-size: 0.9rem; display: block;
+            margin-bottom: 8px; text-decoration: none; transition: var(--transition);
+        }
+        .footer-col a:hover { color: var(--gold); }
+        .footer-bottom {
+            text-align: center; padding-top: 20px; border-top: 1px solid var(--border);
+            color: var(--text-muted); font-size: 0.85rem;
+        }
+
+        /* Music Player */
+        .music-player {
+            position: fixed; bottom: 20px; right: 20px; z-index: 999;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 50px; padding: 8px 15px 8px 12px; display: flex;
+            align-items: center; gap: 10px; box-shadow: var(--shadow);
+            transform: translateX(150px); transition: var(--transition);
+        }
+        .music-player.active { transform: translateX(0); }
+        .music-player.playing .music-bars { opacity: 1; }
+        .music-bars { display: flex; gap: 3px; opacity: 0.5; transition: opacity 0.3s; }
+        .music-bars .bar {
+            width: 3px; background: var(--gold); border-radius: 2px;
+            animation: equalize 1s infinite ease-in-out;
+        }
+        .music-bars .bar:nth-child(2) { animation-delay: 0.1s; height: 12px; }
+        .music-bars .bar:nth-child(3) { animation-delay: 0.2s; height: 18px; }
+        .music-bars .bar:nth-child(4) { animation-delay: 0.3s; }
+        @keyframes equalize { 0%, 100% { height: 8px; } 50% { height: 20px; } }
+        .music-label { font-size: 0.85rem; color: var(--text-muted); }
+        .music-toggle {
+            width: 32px; height: 32px; border-radius: 50%; border: none;
+            background: var(--gold); color: #000; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .music-toggle:hover { transform: scale(1.1); }
+
+        /* Scroll Top */
+        .scroll-top {
+            position: fixed; bottom: 20px; left: 20px; z-index: 999;
+            width: 45px; height: 45px; border-radius: 50%; border: none;
+            background: var(--gold); color: #000; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; box-shadow: var(--shadow-gold);
+            opacity: 0; visibility: hidden; transform: translateY(20px);
+            transition: var(--transition);
+        }
+        .scroll-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        .scroll-top:hover { transform: translateY(-5px); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.2rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn-gold, .btn-outline { width: 100%; max-width: 300px; justify-content: center; }
+            .posts-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .navbar { padding: 10px 15px; }
+            .nav-socials { gap: 8px; }
+            .nav-socials a { width: 28px; height: 28px; font-size: 0.95rem; }
+            .section { padding: 50px 15px; }
+            .price-card { padding: 18px; }
+            .price-card .karat { font-size: 1.7rem; }
+            .social-icons { gap: 10px; }
+            .social-icon { width: 48px; height: 48px; font-size: 1.2rem; }
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+            html { scroll-behavior: auto; }
+        }
     </style>
 </head>
 <body>
-    <div class="loading-screen" id="loadingScreen"><div class="loading-logo">Grand Merysa</div><div class="loading-bar"></div></div>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">Grand Merysa</div>
+        <div class="loading-bar"></div>
+    </div>
+
+    <!-- Toast -->
     <div class="toast" id="toast"></div>
 
+    <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="nav-left">
-            <div class="hamburger" id="hamburger" onclick="toggleSidebar()"><span></span><span></span><span></span></div>
+            <div class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </div>
             <div class="nav-brand">
-                <img src="https://via.placeholder.com/45x45/D4AF37/0A0A0A?text=GM" alt="Profile" class="nav-profile-img" id="navProfileImg">
+                <img src="https://via.placeholder.com/45x45/D4AF37/0A0A0A?text=GM" alt="Logo" class="nav-profile-img" id="navProfileImg">
                 <span class="nav-shop-name">Grand Merysa</span>
             </div>
         </div>
         <div class="nav-right">
             <div class="nav-socials">
-                <a href="#" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://www.instagram.com/tokomasmerysa?igsh=MWM2azhjbXZ6bGxldQ==" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.facebook.com/share/1Hxp9HZYo6/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.tiktok.com/@grand.merysa?_r=1&_t=ZS-965M3p4RA4V" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                <a href="#" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#" target="_blank" title="WhatsApp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" target="_blank" title="Instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" title="Facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" title="TikTok" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="#" target="_blank" title="YouTube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
             </div>
-            <button class="music-btn" onclick="toggleMusic()" title="Music"><i class="fas fa-music"></i></button>
+            <button class="music-btn" onclick="toggleMusic()" title="Music" aria-label="Toggle music">
+                <i class="fas fa-music"></i>
+            </button>
         </div>
     </nav>
 
+    <!-- Sidebar -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-profile"><img src="https://via.placeholder.com/80x80/D4AF37/0A0A0A?text=GM" alt="Profile" id="sidebarProfileImg"><h3>Toko Mas Grand Merysa</h3><p>Pekanbaru, Riau</p></div>
+        <div class="sidebar-profile">
+            <img src="https://via.placeholder.com/80x80/D4AF37/0A0A0A?text=GM" alt="Profile" id="sidebarProfileImg">
+            <h3>Toko Mas Grand Merysa</h3>
+            <p>Pekanbaru, Riau</p>
+        </div>
         <ul class="sidebar-menu">
             <li><a href="#hero" class="active" onclick="toggleSidebar()"><i class="fas fa-home"></i> Beranda</a></li>
             <li><a href="#prices" onclick="toggleSidebar()"><i class="fas fa-coins"></i> Harga Emas</a></li>
@@ -167,6 +490,7 @@
         </ul>
     </aside>
 
+    <!-- Hero Section -->
     <section class="hero" id="hero">
         <div class="hero-bg" id="heroBg"></div>
         <div class="hero-particles" id="particles"></div>
@@ -178,70 +502,121 @@
             <div class="hero-address"><i class="fas fa-map-marker-alt"></i> Pasar Karya Sejahtera, Kilo 6 Garuda Sakti, Pekanbaru, Riau</div>
             <div class="hero-buttons">
                 <a href="#prices" class="btn-gold"><i class="fas fa-coins"></i> Lihat Harga Emas</a>
-                <a href="https://wa.me/" target="_blank" class="btn-outline"><i class="fab fa-whatsapp"></i> Hubungi Kami</a>
+                <a href="https://wa.me/" target="_blank" class="btn-outline" id="heroWaBtn"><i class="fab fa-whatsapp"></i> Hubungi Kami</a>
             </div>
         </div>
     </section>
 
+    <!-- Price Ticker -->
     <div class="price-ticker"><div class="ticker-wrap" id="tickerWrap"></div></div>
 
+    <!-- Price Section -->
     <section class="price-section" id="prices">
         <div class="section" style="padding-top:80px;padding-bottom:80px">
-            <div class="section-header"><h2>Harga Emas Hari Ini</h2><div class="section-divider"></div><p>Harga emas manual yang diperbarui secara berkala</p></div>
+            <div class="section-header">
+                <h2>Harga Emas Hari Ini</h2>
+                <div class="section-divider"></div>
+                <p>Harga emas manual yang diperbarui secara berkala</p>
+            </div>
             <div class="price-cards" id="priceCards"></div>
         </div>
     </section>
 
+    <!-- Gallery/Posts Section -->
     <section class="section" id="gallery">
-        <div class="section-header"><h2>Galeri & Postingan</h2><div class="section-divider"></div><p>Koleksi terbaru dan konten menarik dari Grand Merysa</p></div>
+        <div class="section-header">
+            <h2>Galeri & Postingan</h2>
+            <div class="section-divider"></div>
+            <p>Koleksi terbaru dan konten menarik dari Grand Merysa</p>
+        </div>
         <div class="posts-grid" id="postsGrid"></div>
     </section>
 
+    <!-- Social Section -->
     <section class="social-section" id="socials">
-        <div class="section-header"><h2>Kunjungi Media Sosial Kami</h2><div class="section-divider"></div><p>Ikuti kami di berbagai platform media sosial</p></div>
+        <div class="section-header">
+            <h2>Kunjungi Media Sosial Kami</h2>
+            <div class="section-divider"></div>
+            <p>Ikuti kami di berbagai platform media sosial</p>
+        </div>
         <div class="social-icons">
             <a href="#" target="_blank" class="social-icon whatsapp" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.instagram.com/tokomasmerysa?igsh=MWM2azhjbXZ6bGxldQ==" target="_blank" class="social-icon instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.facebook.com/share/1GseaamHDz/" target="_blank" class="social-icon facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.tiktok.com/@grand.merysa?_r=1&_t=ZS-965M3p4RA4V" target="_blank" class="social-icon tiktok" title="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" target="_blank" class="social-icon instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" target="_blank" class="social-icon facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" target="_blank" class="social-icon tiktok" title="TikTok"><i class="fab fa-tiktok"></i></a>
             <a href="#" target="_blank" class="social-icon youtube" title="YouTube"><i class="fab fa-youtube"></i></a>
         </div>
     </section>
 
+    <!-- About Section -->
     <section class="section" id="about">
-        <div class="section-header"><h2>Mengapa Grand Merysa?</h2><div class="section-divider"></div><p>Keunggulan berbelanja di toko kami</p></div>
+        <div class="section-header">
+            <h2>Mengapa Grand Merysa?</h2>
+            <div class="section-divider"></div>
+            <p>Keunggulan berbelanja di toko kami</p>
+        </div>
         <div class="about-grid">
-            <div class="about-card"><i class="fas fa-gem"></i><h4>Emas Berkualitas</h4><p>Semua produk kami menggunakan emas berkualitas tinggi</p></div>
-            <div class="about-card"><i class="fas fa-tags"></i><h4>Harga Bersaing</h4><p>Harga yang kompetitif dan transparan</p></div>
-            <div class="about-card"><i class="fas fa-handshake"></i><h4>Terpercaya</h4><p>Toko emas terpercaya di Pekanbaru</p></div>
-            <div class="about-card"><i class="fas fa-store"></i><h4>Langsung ke Toko</h4><p>Kunjungi langsung di Pasar Karya Sejahtera</p></div>
+            <div class="about-card"><i class="fas fa-gem"></i><h4>Emas Berkualitas</h4><p>Semua produk kami menggunakan emas berkualitas tinggi dengan sertifikat resmi.</p></div>
+            <div class="about-card"><i class="fas fa-tags"></i><h4>Harga Bersaing</h4><p>Harga yang kompetitif dan transparan, disesuaikan dengan pasar emas terkini.</p></div>
+            <div class="about-card"><i class="fas fa-handshake"></i><h4>Terpercaya</h4><p>Toko emas terpercaya di Pekanbaru dengan pengalaman bertahun-tahun.</p></div>
+            <div class="about-card"><i class="fas fa-store"></i><h4>Langsung ke Toko</h4><p>Kunjungi langsung di Pasar Karya Sejahtera untuk pengalaman belanja terbaik.</p></div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-col"><h3>Grand Merysa</h3><p>Toko emas terpercaya di Pekanbaru.</p></div>
-            <div class="footer-col"><h3>Alamat</h3><p><i class="fas fa-map-marker-alt" style="color:var(--gold)"></i> Pasar Karya Sejahtera, Kilo 6 Garuda Sakti, Pekanbaru, Riau</p></div>
-            <div class="footer-col"><h3>Menu</h3><a href="#hero">Beranda</a><a href="#prices">Harga Emas</a><a href="#gallery">Galeri</a></div>
-            <div class="footer-col"><h3>Jam Buka</h3><p>Senin - Sabtu: 09:00 - 21:00<br>Minggu: 10:00 - 20:00</p></div>
+            <div class="footer-col">
+                <h3>Grand Merysa</h3>
+                <p>Toko emas terpercaya di Pekanbaru, menyediakan perhiasan emas berkualitas dengan harga terbaik.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Alamat</h3>
+                <p><i class="fas fa-map-marker-alt" style="color:var(--gold)"></i> Pasar Karya Sejahtera, Kilo 6 Garuda Sakti, Pekanbaru, Riau</p>
+            </div>
+            <div class="footer-col">
+                <h3>Menu</h3>
+                <a href="#hero">Beranda</a>
+                <a href="#prices">Harga Emas</a>
+                <a href="#gallery">Galeri</a>
+                <a href="#socials">Media Sosial</a>
+            </div>
+            <div class="footer-col">
+                <h3>Jam Buka</h3>
+                <p>Senin - Sabtu: 09:00 - 21:00<br>Minggu: 10:00 - 20:00</p>
+            </div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2026 Toko Mas Grand Merysa. All Rights Reserved.</p></div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Toko Mas Grand Merysa. All Rights Reserved.</p>
+        </div>
     </footer>
 
+    <!-- Music Player -->
     <div class="music-player" id="musicPlayer">
         <div class="music-bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
         <span class="music-label">Music</span>
-        <button class="music-toggle" id="musicToggle" onclick="toggleMusic()"><i class="fas fa-play"></i></button>
+        <button class="music-toggle" id="musicToggle" onclick="toggleMusic()" aria-label="Play/Pause music">
+            <i class="fas fa-play"></i>
+        </button>
     </div>
-    <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></button>
-    <audio id="bgMusic" loop preload="auto"><source src="music.mp3" type="audio/mpeg"></audio>
 
-    <!-- FIREBASE RTDB -->
+    <!-- Scroll Top Button -->
+    <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- FIREBASE RTDB SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
     <script>
-        // 🔴 GANTI DENGAN CONFIG FIREBASE REALTIME DATABASE KAMU (SAMA DENGAN ADMIN)
+        // 🔴 GANTI DENGAN CONFIG FIREBASE REALTIME DATABASE KAMU
         const firebaseConfig = {
   apiKey: "AIzaSyC0bcwa2YrzOTHQZRjNUdxd-tPbbAJbTdo",
   authDomain: "grand-merysa.firebaseapp.com",
@@ -259,106 +634,344 @@
             console.log("✅ Index: Firebase RTDB initialized");
         } catch(e) { console.error("❌ Index: Firebase init failed:", e); }
 
+        // Music State
         let musicPlaying = false;
         const bgMusic = document.getElementById('bgMusic');
 
-        window.addEventListener('load', () => setTimeout(() => document.getElementById('loadingScreen').classList.add('hidden'), 1200));
+        // Initial Load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                // Auto-play music after loading (with user gesture requirement)
+                attemptPlayMusic();
+            }, 1200);
+        });
+
+        // Scroll Effects
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             const st = document.getElementById('scrollTop');
             nav.classList.toggle('scrolled', window.scrollY > 50);
             st.classList.toggle('visible', window.scrollY > 500);
         });
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('sidebarOverlay').classList.toggle('active'); document.getElementById('hamburger').classList.toggle('active'); }
+
+        // Sidebar Toggle
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('sidebarOverlay').classList.toggle('active');
+            document.getElementById('hamburger').classList.toggle('active');
+            document.body.style.overflow = document.getElementById('sidebar').classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Music Toggle
         function toggleMusic() {
-            if(musicPlaying) { bgMusic.pause(); document.getElementById('musicPlayer').classList.remove('playing'); document.getElementById('musicToggle').innerHTML='<i class="fas fa-play"></i>'; }
-            else { bgMusic.play().catch(()=>{}); document.getElementById('musicPlayer').classList.add('playing'); document.getElementById('musicToggle').innerHTML='<i class="fas fa-pause"></i>'; }
+            if (musicPlaying) {
+                bgMusic.pause();
+                document.getElementById('musicPlayer').classList.remove('playing');
+                document.getElementById('musicToggle').innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                bgMusic.play().catch(e => console.log('Autoplay prevented:', e));
+                document.getElementById('musicPlayer').classList.add('playing');
+                document.getElementById('musicToggle').innerHTML = '<i class="fas fa-pause"></i>';
+            }
             musicPlaying = !musicPlaying;
         }
-        function createParticles() { const c = document.getElementById('particles'); for(let i=0;i<25;i++){const p=document.createElement('div');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDuration=(Math.random()*8+6)+'s';p.style.animationDelay=Math.random()*5+'s';p.style.width=p.style.height=(Math.random()*3+2)+'px';c.appendChild(p);} }
-        createParticles();
-        function formatRupiah(n) { return 'Rp ' + Number(n).toLocaleString('id-ID'); }
-        document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click', e=>{ e.preventDefault(); const t=document.querySelector(a.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); }));
-        window.addEventListener('scroll', () => { const sec = document.querySelectorAll('section[id]'); let cur=''; sec.forEach(s=>{ if(window.scrollY>=s.offsetTop-100) cur=s.getAttribute('id'); }); document.querySelectorAll('.sidebar-menu a').forEach(a=>{ a.classList.remove('active'); if(a.getAttribute('href')==='#'+cur) a.classList.add('active'); }); });
 
-        // DATA LISTENERS (RTDB)
+        function attemptPlayMusic() {
+            bgMusic.play().then(() => {
+                musicPlaying = true;
+                document.getElementById('musicPlayer').classList.add('playing', 'active');
+                document.getElementById('musicToggle').innerHTML = '<i class="fas fa-pause"></i>';
+            }).catch(() => {
+                // Autoplay blocked, show music player for manual play
+                document.getElementById('musicPlayer').classList.add('active');
+            });
+        }
+
+        // Particles Animation
+        function createParticles() {
+            const c = document.getElementById('particles');
+            for (let i = 0; i < 25; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (Math.random() * 8 + 6) + 's';
+                p.style.animationDelay = Math.random() * 5 + 's';
+                p.style.width = p.style.height = (Math.random() * 3 + 2) + 'px';
+                c.appendChild(p);
+            }
+        }
+        createParticles();
+
+        // Format Rupiah
+        function formatRupiah(n) {
+            return 'Rp ' + Number(n).toLocaleString('id-ID');
+        }
+
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const href = a.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (window.innerWidth <= 768) toggleSidebar();
+                    }
+                }
+            });
+        });
+
+        // Active Menu on Scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            let current = '';
+            sections.forEach(s => {
+                if (window.scrollY >= s.offsetTop - 150) current = s.getAttribute('id');
+            });
+            document.querySelectorAll('.sidebar-menu a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+            });
+        });
+
+        // ==================== FIREBASE DATA LOADERS ====================
+
+        // Load Gold Prices
         function loadGoldPrices() {
+            if (!db) return;
             db.ref('goldPrices').on('value', snapshot => {
                 const data = snapshot.val() || {};
-                const arr = Object.keys(data).map(k => ({...data[k]})).sort((a,b)=>a.karat-b.karat);
+                const arr = Object.keys(data).map(k => ({...data[k]})).sort((a,b) => a.karat - b.karat);
                 const cards = document.getElementById('priceCards');
                 const ticker = document.getElementById('tickerWrap');
+                
+                if (arr.length === 0) {
+                    cards.innerHTML = '<p style="text-align:center;color:var(--text-muted);grid-column:1/-1;padding:20px">Belum ada data harga.</p>';
+                    return;
+                }
+                
                 let cHTML = '', tHTML = '';
-                if(arr.length === 0) { cards.innerHTML = '<p style="text-align:center;color:var(--gray);grid-column:1/-1">Belum ada data harga.</p>'; return; }
                 arr.forEach(d => {
-                    const dt = d.updatedAt ? new Date(d.updatedAt).toLocaleString('id-ID') : '-';
-                    cHTML += `<div class="price-card"><div class="karat">${d.karat}K</div><div class="type">Emas ${d.karat} Karat</div><div class="amount">${formatRupiah(d.sellPrice)}</div><div class="unit">Harga Jual / gram</div><div style="margin-top:8px;color:var(--gray);font-size:0.85rem">Beli: ${formatRupiah(d.buyPrice)}</div><div class="updated"><i class="fas fa-clock"></i> ${dt}</div></div>`;
+                    const dt = d.updatedAt ? new Date(d.updatedAt).toLocaleString('id-ID', { 
+                        day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' 
+                    }) : '-';
+                    cHTML += `
+                        <div class="price-card">
+                            <div class="karat">${d.karat}K</div>
+                            <div class="type">Emas ${d.karat} Karat</div>
+                            <div class="amount">${formatRupiah(d.sellPrice)}</div>
+                            <div class="unit">Harga Jual / gram</div>
+                            <div style="margin-top:8px;color:var(--text-muted);font-size:0.85rem">
+                                <i class="fas fa-arrow-down" style="color:#2ed573"></i> Beli: ${formatRupiah(d.buyPrice)}
+                            </div>
+                            <div class="updated"><i class="fas fa-clock"></i> ${dt}</div>
+                        </div>
+                    `;
                     tHTML += `<div class="ticker-item"><span class="label">Emas ${d.karat}K</span><span class="price">${formatRupiah(d.sellPrice)}</span></div>`;
                 });
                 cards.innerHTML = cHTML;
-                ticker.innerHTML = tHTML + tHTML;
+                ticker.innerHTML = tHTML + tHTML; // Duplicate for seamless loop
             }, err => console.error("❌ Index: Prices error:", err));
         }
 
+        // Load Posts (WITH VIDEO SUPPORT)
         function loadPosts() {
+            if (!db) return;
             db.ref('posts').orderByChild('createdAt').on('value', snapshot => {
                 const data = snapshot.val() || {};
-                const arr = Object.keys(data).map(k => ({id:k, ...data[k]})).sort((a,b)=>b.createdAt-a.createdAt);
+                const arr = Object.keys(data).map(k => ({id: k, ...data[k]})).sort((a,b) => b.createdAt - a.createdAt);
                 const grid = document.getElementById('postsGrid');
-                if(arr.length === 0) { grid.innerHTML = '<p style="text-align:center;color:var(--gray);grid-column:1/-1">Belum ada postingan.</p>'; return; }
+                
+                if (arr.length === 0) {
+                    grid.innerHTML = '<p style="text-align:center;color:var(--text-muted);grid-column:1/-1;padding:20px">Belum ada postingan.</p>';
+                    return;
+                }
+                
                 let html = '';
                 arr.forEach(d => {
-                    const dt = d.createdAt ? new Date(d.createdAt).toLocaleDateString('id-ID', {day:'numeric',month:'long',year:'numeric'}) : '';
+                    const dt = d.createdAt ? new Date(d.createdAt).toLocaleDateString('id-ID', {
+                        day: 'numeric', month: 'long', year: 'numeric'
+                    }) : '';
+                    
+                    // 🎬 RENDER MEDIA BASED ON TYPE
                     let media = '';
-                    if(d.type==='photo' && d.imageUrl) media = `<div class="post-media"><img src="${d.imageUrl}" alt="${d.title}" loading="lazy"></div>`;
-                    else if(d.type==='youtube' && d.embedUrl) media = `<div class="post-media"><div class="embed-container"><iframe src="${d.embedUrl}" allowfullscreen></iframe></div></div>`;
-                    else if(['tiktok','instagram','facebook'].includes(d.type) && d.embedUrl) {
-                        if(d.type==='tiktok') media = `<div class="post-media"><div style="padding:10px"><blockquote class="tiktok-embed" cite="${d.embedUrl}" data-video-id="${d.embedUrl}" style="max-width:605px;min-width:325px"><section></section></blockquote></div></div>`;
-                        else if(d.type==='instagram') media = `<div class="post-media"><div style="padding:10px;background:#000"><iframe src="${d.embedUrl}embed/" width="400" height="500" style="border:none;overflow:hidden"></iframe></div></div>`;
-                        else media = `<div class="post-media"><div style="padding:10px;background:#000"><iframe src="https://www.facebook.com/plugins/post.php?href=${encodeURIComponent(d.embedUrl)}&width=500" width="500" height="500" style="border:none;overflow:hidden" scrolling="no"></iframe></div></div>`;
+                    const type = d.type || 'photo';
+                    
+                    if (type === 'photo' && d.imageUrl) {
+                        media = `<div class="post-media"><img src="${d.imageUrl}" alt="${d.title}" loading="lazy" onerror="this.parentElement.innerHTML='<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#1a1a2e;color:#a0a0b0\\'><i class=\\'fas fa-image\\' style=\\'font-size:2rem;margin-right:8px\\'></i>Gambar tidak tersedia</div>'"></div>`;
+                    
+                    } else if (type === 'video' && d.videoUrl) {
+                        // 🎥 VIDEO UPLOAD FROM GALLERY (Base64)
+                        media = `
+                            <div class="post-media">
+                                <video src="${d.videoUrl}" 
+                                       controls 
+                                       preload="metadata"
+                                       poster=""
+                                       style="width:100%;height:100%;object-fit:cover"
+                                       onerror="this.parentElement.innerHTML='<div style=\\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#1a1a2e;color:#a0a0b0;text-align:center;padding:10px;font-size:0.85rem\\'><i class=\\'fas fa-video-slash\\' style=\\'font-size:1.5rem;display:block;margin-bottom:8px\\'></i>Video tidak dapat diputar</div>'"
+                                       playsinline
+                                       webkit-playsinline>
+                                    Browser Anda tidak mendukung pemutaran video.
+                                </video>
+                            </div>
+                        `;
+                    
+                    } else if (type === 'youtube' && d.embedUrl) {
+                        media = `<div class="post-media"><div class="embed-container"><iframe src="${d.embedUrl}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div></div>`;
+                    
+                    } else if (type === 'tiktok' && d.embedUrl) {
+                        media = `<div class="post-media"><blockquote class="tiktok-embed" cite="${d.embedUrl}" data-video-id="${d.embedUrl}" style="max-width:605px;min-width:325px;margin:0 auto"><section></section></blockquote></div>`;
+                    
+                    } else if (type === 'instagram' && d.embedUrl) {
+                        media = `<div class="post-media"><div style="padding:10px;background:#000"><iframe src="${d.embedUrl.replace('/p/', '/embed/')}" width="100%" height="400" style="border:none;overflow:hidden" loading="lazy"></iframe></div></div>`;
+                    
+                    } else if (type === 'facebook' && d.embedUrl) {
+                        media = `<div class="post-media"><div style="padding:10px;background:#000"><iframe src="https://www.facebook.com/plugins/post.php?href=${encodeURIComponent(d.embedUrl)}&width=500&show_text=true" width="100%" height="400" style="border:none;overflow:hidden" loading="lazy" scrolling="no"></iframe></div></div>`;
+                    
+                    } else {
+                        media = `<div class="post-media" style="display:flex;align-items:center;justify-content:center;background:var(--bg-card)"><i class="fas fa-image" style="font-size:3rem;color:var(--border)"></i></div>`;
                     }
-                    const srcClass = d.type || 'photo';
-                    html += `<div class="post-card">${media}<div class="post-content"><h3>${d.title}</h3><p>${d.description||''}</p></div><div class="post-meta"><span class="post-date"><i class="fas fa-calendar"></i> ${dt}</span><span class="post-source ${srcClass}"><i class="fas fa-${{youtube:'play-circle',instagram:'instagram',facebook:'facebook',tiktok:'music',photo:'image'}[d.type]||'image'}"></i> ${srcClass.toUpperCase()}</span></div></div>`;
+                    
+                    // Source badge styling
+                    const sourceConfig = {
+                        photo: { icon: 'image', class: '', label: 'FOTO' },
+                        video: { icon: 'video', class: 'video', label: 'VIDEO' },
+                        youtube: { icon: 'youtube', class: 'youtube', label: 'YOUTUBE' },
+                        tiktok: { icon: 'music', class: 'tiktok', label: 'TIKTOK' },
+                        instagram: { icon: 'instagram', class: 'instagram', label: 'INSTAGRAM' },
+                        facebook: { icon: 'facebook', class: '', label: 'FACEBOOK' }
+                    };
+                    const src = sourceConfig[type] || sourceConfig.photo;
+                    
+                    html += `
+                        <article class="post-card">
+                            ${media}
+                            <div class="post-content">
+                                <h3>${d.title || 'Tanpa Judul'}</h3>
+                                <p>${d.description || ''}</p>
+                            </div>
+                            <div class="post-meta">
+                                <span class="post-date"><i class="fas fa-calendar"></i> ${dt}</span>
+                                <span class="post-source ${src.class}">
+                                    <i class="fas fa-${src.icon}"></i> ${src.label}
+                                </span>
+                            </div>
+                        </article>
+                    `;
                 });
                 grid.innerHTML = html;
                 loadEmbedScripts();
             }, err => console.error("❌ Index: Posts error:", err));
         }
 
+        // Load Embed Scripts for Social Media
         function loadEmbedScripts() {
-            if(!document.getElementById('ig-embed-script')) { const s=document.createElement('script');s.id='ig-embed-script';s.src='//www.instagram.com/embed.js';s.async=true;document.body.appendChild(s); }
-            if(!document.getElementById('tt-embed-script')) { const s=document.createElement('script');s.id='tt-embed-script';s.src='https://www.tiktok.com/embed.js';s.async=true;document.body.appendChild(s); }
-            if(!document.getElementById('fb-embed-script')) { const s=document.createElement('script');s.id='fb-embed-script';s.src='https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0';s.async=true;document.body.appendChild(s); }
+            // Instagram
+            if (!document.getElementById('ig-embed-script') && window.instgrm === undefined) {
+                const s = document.createElement('script');
+                s.id = 'ig-embed-script';
+                s.src = '//www.instagram.com/embed.js';
+                s.async = true;
+                document.body.appendChild(s);
+            }
+            // TikTok
+            if (!document.getElementById('tt-embed-script') && window.TiktokEmbed === undefined) {
+                const s = document.createElement('script');
+                s.id = 'tt-embed-script';
+                s.src = 'https://www.tiktok.com/embed.js';
+                s.async = true;
+                document.body.appendChild(s);
+            }
+            // Facebook
+            if (!document.getElementById('fb-embed-script') && window.FB === undefined) {
+                const s = document.createElement('script');
+                s.id = 'fb-embed-script';
+                s.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0';
+                s.async = true;
+                s.defer = true;
+                document.body.appendChild(s);
+            }
         }
 
+        // Load Settings (Profile, Background, Social Links)
         function loadSettings() {
+            if (!db) return;
             db.ref('settings').on('value', snapshot => {
                 const d = snapshot.val() || {};
-                if(d.background?.imageUrl) document.getElementById('heroBg').style.backgroundImage = `url('${d.background.imageUrl}')`;
-                if(d.profile?.imageUrl) { document.getElementById('navProfileImg').src = d.profile.imageUrl; document.getElementById('sidebarProfileImg').src = d.profile.imageUrl; }
+                
+                // Background Hero
+                if (d.background?.imageUrl) {
+                    document.getElementById('heroBg').style.backgroundImage = `url('${d.background.imageUrl}')`;
+                }
+                
+                // Profile Image
+                if (d.profile?.imageUrl) {
+                    const img = d.profile.imageUrl;
+                    document.getElementById('navProfileImg').src = img;
+                    document.getElementById('sidebarProfileImg').src = img;
+                }
+                
+                // Social Links
                 const s = d.socials || {};
-                const updateLinks = (selector, key, prefix='') => {
-                    document.querySelectorAll(selector).forEach(a=>{ if(s[key]) a.href = prefix ? `${prefix}${s[key]}` : s[key]; });
+                const updateLinks = (selector, key, prefix = '') => {
+                    document.querySelectorAll(selector).forEach(a => {
+                        if (s[key]) {
+                            a.href = prefix ? `${prefix}${s[key]}` : s[key];
+                            a.setAttribute('aria-label', key.charAt(0).toUpperCase() + key.slice(1));
+                        }
+                    });
                 };
-                updateLinks('.nav-socials a[title="WhatsApp"]', 'whatsapp', 'https://wa.me/');
-                updateLinks('.nav-socials a[title="Instagram"]', 'instagram');
-                updateLinks('.nav-socials a[title="Facebook"]', 'facebook');
-                updateLinks('.nav-socials a[title="TikTok"]', 'tiktok');
-                updateLinks('.nav-socials a[title="YouTube"]', 'youtube');
-                updateLinks('.social-section .social-icon[title="WhatsApp"]', 'whatsapp', 'https://wa.me/');
-                updateLinks('.social-section .social-icon[title="Instagram"]', 'instagram');
-                updateLinks('.social-section .social-icon[title="Facebook"]', 'facebook');
-                updateLinks('.social-section .social-icon[title="TikTok"]', 'tiktok');
-                updateLinks('.social-section .social-icon[title="YouTube"]', 'youtube');
-                const heroBtn = document.querySelector('.hero-buttons .btn-outline');
-                if(heroBtn && s.whatsapp) heroBtn.href = `https://wa.me/${s.whatsapp}`;
+                
+                updateLinks('.nav-socials a[title="WhatsApp"], .social-section .social-icon.whatsapp', 'whatsapp', 'https://wa.me/');
+                updateLinks('.nav-socials a[title="Instagram"], .social-section .social-icon.instagram', 'instagram');
+                updateLinks('.nav-socials a[title="Facebook"], .social-section .social-icon.facebook', 'facebook');
+                updateLinks('.nav-socials a[title="TikTok"], .social-section .social-icon.tiktok', 'tiktok');
+                updateLinks('.nav-socials a[title="YouTube"], .social-section .social-icon.youtube', 'youtube');
+                
+                // Hero WhatsApp Button
+                const heroBtn = document.getElementById('heroWaBtn');
+                if (heroBtn && s.whatsapp) {
+                    heroBtn.href = `https://wa.me/${s.whatsapp}`;
+                }
             }, err => console.error("❌ Index: Settings error:", err));
         }
 
-        setTimeout(() => { bgMusic.play().then(()=>{musicPlaying=true;document.getElementById('musicPlayer').classList.add('playing');document.getElementById('musicToggle').innerHTML='<i class="fas fa-pause"></i>'}).catch(()=>{}); }, 2000);
+        // Initialize Data Listeners
+        function initApp() {
+            loadGoldPrices();
+            loadPosts();
+            loadSettings();
+        }
 
-        loadGoldPrices(); loadPosts(); loadSettings();
-  // =====================================
+        // Start App when Firebase is ready
+        if (db) {
+            initApp();
+        } else {
+            // Fallback if Firebase fails
+            console.warn('⚠️ Firebase not initialized, using placeholder content');
+            document.getElementById('priceCards').innerHTML = '<p style="text-align:center;color:var(--text-muted);grid-column:1/-1;padding:20px">Koneksi database sedang bermasalah. Silakan refresh halaman.</p>';
+            document.getElementById('postsGrid').innerHTML = '<p style="text-align:center;color:var(--text-muted);grid-column:1/-1;padding:20px">Koneksi database sedang bermasalah. Silakan refresh halaman.</p>';
+        }
+
+        // Keyboard Navigation for Accessibility
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('sidebar').classList.contains('active')) {
+                toggleSidebar();
+            }
+        });
+
+        // Prevent Zoom on Double Tap (Mobile)
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (e) => {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) e.preventDefault();
+            lastTouchEnd = now;
+        }, false);
+        
+    // =====================================
 // REGISTER SERVICE WORKER
 // ==========================================
 if ('servic-eWorker' in navigator) {
