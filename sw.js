@@ -2,10 +2,10 @@ const CACHE_NAME = 'grand-merysa-v1';
 
 const ASSETS = [
   '/',
-  '/index.html',
-  '/music.mp3',
-  '/images/logo-192.png',
-  '/images/logo-512.png'
+  './index.html',
+  './music.mp3',
+  './images/logo-192.png',
+  './images/logo-512.png'
 ];
 
 // INSTALL
