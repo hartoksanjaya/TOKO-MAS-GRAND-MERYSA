@@ -711,8 +711,8 @@
 
         // Format Rupiah
         function formatRupiah(n) {
-            return 'Rp ' + Number(n).toLocaleString('id-ID');
-        }
+    return 'Rp ' + Number(n).toLocaleString('id-ID') + ' / emas';
+}
 
         // Smooth Scroll for Anchor Links
         document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -768,7 +768,7 @@
                             <div class="karat">${d.karat}K</div>
                             <div class="type">Emas ${d.karat} Karat</div>
                             <div class="amount">${formatRupiah(d.sellPrice)}</div>
-                            <div class="unit">Harga Jual / gram</div>
+                            <div class="unit">Harga Jual / emas</div>
                             <div style="margin-top:8px;color:var(--text-muted);font-size:0.85rem">
                                 <i class="fas fa-arrow-down" style="color:#2ed573"></i> Beli: ${formatRupiah(d.buyPrice)}
                             </div>
