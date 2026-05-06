@@ -1,10 +1,8 @@
 {
-  "id": "/",
   "name": "Toko Mas Grand Merysa",
   "short_name": "Grand Merysa",
   "description": "Koleksi Perhiasan Eksklusif Toko Mas Merysa Pekanbaru",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#1a1a1a",
   "theme_color": "#D4AF37",

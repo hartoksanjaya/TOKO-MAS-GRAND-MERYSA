@@ -1,47 +1,23 @@
-const CACHE_NAME = 'grand-merysa-v1';
-
-const ASSETS = [
-  '/',
+const CACHE_NAME = 'grand merysa-v1';
+const assets = [
+  './',
   './index.html',
   './music.mp3',
-  './images/logo-192.png',
-  './images/logo-512.png'
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
 ];
 
-// INSTALL
-self.addEventListener('install', event => {
-  self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(ASSETS))
+self.addEventListener('install', (evt) => {
+  evt.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      cache.addAll(assets);
+    })
   );
 });
 
-// ACTIVATE (hapus cache lama)
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys => 
-      Promise.all(
-        keys.map(key => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
-        })
-      )
-    )
-  );
-  self.clients.claim();
-});
-
-// FETCH (cache first, fallback network)
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        return response || fetch(event.request);
-      })
-      .catch(() => {
-        return caches.match('/index.html');
-      })
+self.addEventListener('fetch', (evt) => {
+  evt.respondWith(
+    caches.match(evt.request).then((res) => {
+      return res || fetch(evt.request);
+    })
   );
 });
